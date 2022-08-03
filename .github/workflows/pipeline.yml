@@ -1,5 +1,5 @@
 # Nome do Workflow
-name: MainToHom
+name: Searadev
 
 # Evento que irá acionar a pipeline
 on: 

@@ -1,5 +1,5 @@
 # Nome do Workflow
-name: MainToHomolog
+name: MainToHom
 
 # Evento que irá acionar a pipeline
 on: 

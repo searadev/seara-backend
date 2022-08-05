@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.searadejesus</groupId>
-	<artifactId>seara</artifactId>
+	<artifactId>seara-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>seara</name>
+	<name>seara-backend</name>
 	<description>Seara Dev</description>
 	<properties>
 		<java.version>11</java.version>

@@ -1,4 +1,4 @@
-package com.searadejesus.seara.config;
+package com.searadejesus.searabackend.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;

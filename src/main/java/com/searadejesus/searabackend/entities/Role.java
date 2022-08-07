@@ -1,4 +1,4 @@
-package com.searadejesus.seara.entities;
+package com.searadejesus.searabackend.entities;
 
 import java.io.Serializable;
 import java.util.Objects;

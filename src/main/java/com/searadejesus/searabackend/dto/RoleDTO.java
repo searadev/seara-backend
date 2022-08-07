@@ -1,9 +1,9 @@
-package com.searadejesus.seara.dto;
+package com.searadejesus.searabackend.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.searadejesus.seara.entities.Role;
+import com.searadejesus.searabackend.entities.Role;
 
 public class RoleDTO implements Serializable {
     private static final long serialVersionUID = 1L;

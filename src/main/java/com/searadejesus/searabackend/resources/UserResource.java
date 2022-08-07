@@ -1,9 +1,5 @@
-package com.searadejesus.seara.resources;
+package com.searadejesus.searabackend.resources;
 import java.net.URI;
-
-import com.searadejesus.seara.dto.UserDTO;
-import com.searadejesus.seara.dto.UserInsertDTO;
-import com.searadejesus.seara.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.searadejesus.searabackend.dto.UserDTO;
+import com.searadejesus.searabackend.dto.UserInsertDTO;
+import com.searadejesus.searabackend.services.UserService;
 
 @RestController
 @RequestMapping(value = "/users")

@@ -1,6 +1,6 @@
-package com.searadejesus.seara.repositories;
+package com.searadejesus.searabackend.repositories;
 
-import com.searadejesus.seara.entities.User;
+import com.searadejesus.searabackend.entities.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

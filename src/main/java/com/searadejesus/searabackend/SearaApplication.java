@@ -1,4 +1,4 @@
-package com.searadejesus.seara;
+package com.searadejesus.searabackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

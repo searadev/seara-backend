@@ -1,4 +1,4 @@
-package com.searadejesus.seara.entities;
+package com.searadejesus.searabackend.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class Author implements Serializable {
     private String lastName;
 
     @OneToMany(mappedBy = "author")
-    private List<Message> messages = new ArrayList<>();
+    private List<Psychography> psychographys = new ArrayList<>();
 
     public Author() {
     }
@@ -59,8 +59,8 @@ public class Author implements Serializable {
         this.lastName = lastName;
     }
 
-    public List<Message> getMessages() {
-        return this.messages;
+    public List<Psychography> getPsychographys() {
+        return this.psychographys;
     }    
 
     @Override

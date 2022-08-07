@@ -1,4 +1,4 @@
-package com.searadejesus.seara.dto;
+package com.searadejesus.searabackend.dto;
 
 public class UserInsertDTO extends UserDTO {
     private static final long serialVersionUID = 1L;

@@ -1,10 +1,10 @@
-package com.searadejesus.seara.dto;
+package com.searadejesus.searabackend.dto;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.searadejesus.seara.entities.User;
+import com.searadejesus.searabackend.entities.User;
 
 public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;

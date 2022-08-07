@@ -1,18 +1,18 @@
-package com.searadejesus.seara.services;
+package com.searadejesus.searabackend.services;
 
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
-import com.searadejesus.seara.dto.RoleDTO;
-import com.searadejesus.seara.dto.UserDTO;
-import com.searadejesus.seara.dto.UserInsertDTO;
-import com.searadejesus.seara.entities.Role;
-import com.searadejesus.seara.entities.User;
-import com.searadejesus.seara.repositories.RoleRepository;
-import com.searadejesus.seara.repositories.UserRepository;
-import com.searadejesus.seara.services.exceptions.DataBaseException;
-import com.searadejesus.seara.services.exceptions.ResourceNotFoundException;
+import com.searadejesus.searabackend.dto.RoleDTO;
+import com.searadejesus.searabackend.dto.UserDTO;
+import com.searadejesus.searabackend.dto.UserInsertDTO;
+import com.searadejesus.searabackend.entities.Role;
+import com.searadejesus.searabackend.entities.User;
+import com.searadejesus.searabackend.repositories.RoleRepository;
+import com.searadejesus.searabackend.repositories.UserRepository;
+import com.searadejesus.searabackend.services.exceptions.DataBaseException;
+import com.searadejesus.searabackend.services.exceptions.ResourceNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

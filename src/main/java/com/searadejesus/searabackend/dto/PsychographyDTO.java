@@ -1,30 +1,19 @@
-package com.searadejesus.searabackend.entities;
+package com.searadejesus.searabackend.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.searadejesus.searabackend.entities.Author;
+import com.searadejesus.searabackend.entities.Psychography;
+import com.searadejesus.searabackend.entities.User;
 
-@Entity
-@Table(name = "tb_psychography")
-public class Psychography implements Serializable {
+public class PsychographyDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
     private Instant moment;
-    @Column(columnDefinition = "LONGTEXT")
     private String text;
     private String motherName;
     private String fatherName;
@@ -32,32 +21,42 @@ public class Psychography implements Serializable {
     private String husbandName;
     private String daughterName;
     private String sonName;
-
-    @ManyToOne
-    @JoinColumn(name = "author_id")
     private Author author;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
-    public Psychography() {
+    public PsychographyDTO() {
     }
 
-    public Psychography(Long id, String firstName, String lastName, Instant moment, String text, Author author, User user, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName) {
+    public PsychographyDTO(Long id, String firstName, String lastName, Instant moment, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, Author author, User user) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.moment = moment;
         this.text = text;
-        this.author = author;
-        this.user = user;
         this.motherName = motherName;
         this.fatherName = fatherName;
         this.wifeName = wifeName;
         this.husbandName = husbandName;
         this.daughterName = daughterName;
         this.sonName = sonName;
+        this.author = author;
+        this.user = user;
+    }
+
+    public PsychographyDTO(Psychography entity){
+        id = entity.getId();
+        firstName = entity.getFirstName();
+        lastName = entity.getLastName();
+        moment = entity.getMoment();
+        text = entity.getText();
+        motherName = entity.getMotherName();
+        fatherName = entity.getFatherName();
+        wifeName = entity.getWifeName();
+        husbandName = entity.getHusbandName();
+        daughterName = entity.getDaughterName();
+        sonName = entity.getSonName();
+        author = entity.getAuthor();
+        user = entity.getUser();
     }
 
     public Long getId() {
@@ -99,23 +98,6 @@ public class Psychography implements Serializable {
     public void setText(String text) {
         this.text = text;
     }
-
-    public Author getAuthor() {
-        return this.author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
 
     public String getMotherName() {
         return this.motherName;
@@ -165,19 +147,19 @@ public class Psychography implements Serializable {
         this.sonName = sonName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Psychography)) {
-            return false;
-        }
-        Psychography psychography = (Psychography) o;
-        return Objects.equals(id, psychography.id);
+    public Author getAuthor() {
+        return this.author;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }    
 }

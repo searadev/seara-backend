@@ -40,8 +40,8 @@ public class User implements Serializable {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Psychography> psychographys = new ArrayList<>();
+    /*@OneToMany(mappedBy = "user")
+    private List<Psychography> psychographys = new ArrayList<>();*/
 
     public User() {
     }

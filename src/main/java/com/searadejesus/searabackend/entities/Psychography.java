@@ -23,7 +23,10 @@ public class Psychography implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant moment;
+
     @Column(columnDefinition = "LONGTEXT")
     private String text;
     private String motherName;
@@ -31,12 +34,11 @@ public class Psychography implements Serializable {
     private String wifeName;
     private String husbandName;
     private String daughterName;
-    private String sonName;
+    private String sonName;    
 
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -44,7 +46,7 @@ public class Psychography implements Serializable {
     public Psychography() {
     }
 
-    public Psychography(Long id, String firstName, String lastName, Instant moment, String text, Author author, User user, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName) {
+    public Psychography(Long id, String firstName, String lastName, Instant moment, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, Author author, User user) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -58,6 +60,8 @@ public class Psychography implements Serializable {
         this.husbandName = husbandName;
         this.daughterName = daughterName;
         this.sonName = sonName;
+        this.author = author;
+        this.user = user;
     }
 
     public Long getId() {
@@ -98,24 +102,7 @@ public class Psychography implements Serializable {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public Author getAuthor() {
-        return this.author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
+    }    
 
     public String getMotherName() {
         return this.motherName;
@@ -164,6 +151,23 @@ public class Psychography implements Serializable {
     public void setSonName(String sonName) {
         this.sonName = sonName;
     }
+
+    public Author getAuthor() {
+        return this.author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 
     @Override
     public boolean equals(Object o) {

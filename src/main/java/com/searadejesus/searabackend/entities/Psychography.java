@@ -35,6 +35,7 @@ public class Psychography implements Serializable {
     private String husbandName;
     private String daughterName;
     private String sonName;    
+    
 
     @ManyToOne
     @JoinColumn(name = "author_id")

@@ -27,15 +27,16 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      #- name: Cache Maven packages
-      #  uses: actions/cache@v2
-      #  with:
-      #    path: ~/.m2
-      #    key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-      #    restore-keys: ${{ runner.os }}-m2
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
 
       - name: Build Maven package
-        run: mvn --batch-mode --update-snapshots package
+        #run: mvn --batch-mode --update-snapshots package
+        run: mvn clean package
         env:
           MAVEN_OPTS: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn"
 

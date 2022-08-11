@@ -3,7 +3,6 @@ package com.searadejesus.searabackend.dto;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
 import com.searadejesus.searabackend.entities.User;
 
 public class UserDTO implements Serializable {
@@ -68,5 +67,8 @@ public class UserDTO implements Serializable {
 
     public Set<RoleDTO> getRoles() {
         return this.roles;
+    }
+    public void setRoles(Set<RoleDTO> roles) {
+        this.roles = roles;
     }
 }

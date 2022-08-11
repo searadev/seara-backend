@@ -3,9 +3,7 @@ package com.searadejesus.searabackend.dto;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.searadejesus.searabackend.entities.Author;
 import com.searadejesus.searabackend.entities.Psychography;
-import com.searadejesus.searabackend.entities.User;
 
 public class PsychographyDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -21,13 +19,13 @@ public class PsychographyDTO implements Serializable {
     private String husbandName;
     private String daughterName;
     private String sonName;
-    private Author author;
-    private User user;
+    private AuthorDTO authorDto;
+    private UserDTO userDto;
 
     public PsychographyDTO() {
     }
 
-    public PsychographyDTO(Long id, String firstName, String lastName, Instant moment, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, Author author, User user) {
+    public PsychographyDTO(Long id, String firstName, String lastName, Instant moment, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, AuthorDTO authorDto, UserDTO userDto) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,8 +37,8 @@ public class PsychographyDTO implements Serializable {
         this.husbandName = husbandName;
         this.daughterName = daughterName;
         this.sonName = sonName;
-        this.author = author;
-        this.user = user;
+        this.authorDto = authorDto;
+        this.userDto = userDto;
     }
 
     public PsychographyDTO(Psychography entity){
@@ -55,8 +53,8 @@ public class PsychographyDTO implements Serializable {
         husbandName = entity.getHusbandName();
         daughterName = entity.getDaughterName();
         sonName = entity.getSonName();
-        author = entity.getAuthor();
-        user = entity.getUser();
+        authorDto = new AuthorDTO(entity.getAuthor()) ;
+        userDto = new UserDTO(entity.getUser()) ;
     }
 
     public Long getId() {
@@ -147,19 +145,20 @@ public class PsychographyDTO implements Serializable {
         this.sonName = sonName;
     }
 
-    public Author getAuthor() {
-        return this.author;
+    public AuthorDTO getAuthorDto() {
+        return this.authorDto;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorDto(AuthorDTO authorDto) {
+        this.authorDto = authorDto;
     }
 
-    public User getUser() {
-        return this.user;
+    public UserDTO getUserDto() {
+        return this.userDto;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }    
+    public void setUserDto(UserDTO userDto) {
+        this.userDto = userDto;
+    }
+        
 }

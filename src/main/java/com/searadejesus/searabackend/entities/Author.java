@@ -1,16 +1,14 @@
 package com.searadejesus.searabackend.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "tb_author")
@@ -21,10 +19,7 @@ public class Author implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
-    private String lastName;
-
-    @OneToMany(mappedBy = "author")
-    private List<Psychography> psychographys = new ArrayList<>();
+    private String lastName;    
 
     public Author() {
     }
@@ -57,11 +52,7 @@ public class Author implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public List<Psychography> getPsychographys() {
-        return this.psychographys;
-    }    
+    }       
 
     @Override
     public boolean equals(Object o) {

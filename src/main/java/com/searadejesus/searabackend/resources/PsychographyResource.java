@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.searadejesus.searabackend.dto.PsychographyDTO;
+import com.searadejesus.searabackend.dto.PsychographyInsertDTO;
 import com.searadejesus.searabackend.services.PsychographyService;
 
 @RestController
@@ -38,7 +39,7 @@ public class PsychographyResource {
     }
 
     @PostMapping
-    public ResponseEntity<PsychographyDTO> insert(@RequestBody PsychographyDTO dto) {
+    public ResponseEntity<PsychographyDTO> insert(@RequestBody PsychographyInsertDTO dto) {
         PsychographyDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDto.getId()).toUri();

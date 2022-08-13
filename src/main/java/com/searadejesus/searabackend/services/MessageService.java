@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.searadejesus.searabackend.dto.MessageDTO;
+import com.searadejesus.searabackend.dto.MessageInsertDTO;
 import com.searadejesus.searabackend.entities.Message;
+import com.searadejesus.searabackend.entities.User;
 import com.searadejesus.searabackend.repositories.MessageRepository;
-
+import com.searadejesus.searabackend.repositories.UserRepository;
 import com.searadejesus.searabackend.services.exceptions.DataBaseException;
 import com.searadejesus.searabackend.services.exceptions.ResourceNotFoundException;
 
@@ -24,6 +26,9 @@ public class MessageService {
 
     @Autowired
     private MessageRepository repository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional(readOnly = true)
     public Page<MessageDTO> findAllPaged(Pageable pageable) {
@@ -39,9 +44,11 @@ public class MessageService {
     }
 
     @Transactional
-    public MessageDTO insert(MessageDTO dto) {
+    public MessageDTO insert(MessageInsertDTO dto) {
         Message entity = new Message();
         copyDtoToEntity(dto, entity);
+        User user = userRepository.getOne(dto.getUser().getId());
+        entity.setUser(user);
         entity = repository.save(entity);
         return new MessageDTO(entity);
     }    
@@ -73,8 +80,8 @@ public class MessageService {
 
     private void copyDtoToEntity(MessageDTO dto, Message entity) {
 
-        entity.setText(dto.getText());
-        entity.setUser(dto.getUser());
+        entity.setText(dto.getText());       
+        
     }
     
 }

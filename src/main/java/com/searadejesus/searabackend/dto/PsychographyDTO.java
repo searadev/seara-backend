@@ -3,8 +3,6 @@ package com.searadejesus.searabackend.dto;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.searadejesus.searabackend.entities.Author;
-import com.searadejesus.searabackend.entities.User;
 import com.searadejesus.searabackend.entities.Psychography;
 
 public class PsychographyDTO implements Serializable {
@@ -21,13 +19,12 @@ public class PsychographyDTO implements Serializable {
     private String husbandName;
     private String daughterName;
     private String sonName;
-    private Author author;
-    private User user;
+    private AuthorDTO author;
 
     public PsychographyDTO() {
     }
 
-    public PsychographyDTO(Long id, String firstName, String lastName, Instant moment, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, Author author, User user) {
+    public PsychographyDTO(Long id, String firstName, String lastName, Instant moment, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,9 +35,7 @@ public class PsychographyDTO implements Serializable {
         this.wifeName = wifeName;
         this.husbandName = husbandName;
         this.daughterName = daughterName;
-        this.sonName = sonName;
-        this.author = author;
-        this.user = user;
+        this.sonName = sonName;        
     }
 
     public PsychographyDTO(Psychography entity){
@@ -55,8 +50,7 @@ public class PsychographyDTO implements Serializable {
         husbandName = entity.getHusbandName();
         daughterName = entity.getDaughterName();
         sonName = entity.getSonName();
-        author = entity.getAuthor();
-        user = entity.getUser();
+        this.author = new AuthorDTO(entity.getAuthor());
     }
 
     public Long getId() {
@@ -147,21 +141,11 @@ public class PsychographyDTO implements Serializable {
         this.sonName = sonName;
     }
 
-
-    public Author getAuthor() {
+    public AuthorDTO getAuthor() {
         return this.author;
     }
 
-    public void setAuthor(Author author) {
+    public void setAuthor(AuthorDTO author) {
         this.author = author;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }   
-        
 }

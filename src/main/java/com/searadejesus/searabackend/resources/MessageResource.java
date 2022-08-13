@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.searadejesus.searabackend.dto.MessageDTO;
+import com.searadejesus.searabackend.dto.MessageInsertDTO;
 import com.searadejesus.searabackend.services.MessageService;
 
 @RestController
@@ -38,7 +39,7 @@ public class MessageResource {
     }
 
     @PostMapping
-    public ResponseEntity<MessageDTO> insert(@RequestBody MessageDTO dto) {
+    public ResponseEntity<MessageDTO> insert(@RequestBody MessageInsertDTO dto) {
         MessageDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDto.getId()).toUri();

@@ -13,9 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.searadejesus.searabackend.dto.PsychographyDTO;
+import com.searadejesus.searabackend.dto.PsychographyInsertDTO;
+import com.searadejesus.searabackend.entities.Author;
 import com.searadejesus.searabackend.entities.Psychography;
+import com.searadejesus.searabackend.entities.User;
+import com.searadejesus.searabackend.repositories.AuthorRepository;
 import com.searadejesus.searabackend.repositories.PsychographyRepository;
-
+import com.searadejesus.searabackend.repositories.UserRepository;
 import com.searadejesus.searabackend.services.exceptions.DataBaseException;
 import com.searadejesus.searabackend.services.exceptions.ResourceNotFoundException;
 
@@ -24,6 +28,12 @@ public class PsychographyService {
 
     @Autowired
     private PsychographyRepository repository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional(readOnly = true)
     public Page<PsychographyDTO> findAllPaged(Pageable pageable) {
@@ -39,9 +49,11 @@ public class PsychographyService {
     }
 
     @Transactional
-    public PsychographyDTO insert(PsychographyDTO dto) {
+    public PsychographyDTO insert(PsychographyInsertDTO dto) {
         Psychography entity = new Psychography();
         copyDtoToEntity(dto, entity);
+        User user = userRepository.getOne(dto.getUser().getId());
+        entity.setUser(user);
         entity = repository.save(entity);
         return new PsychographyDTO(entity);
     }    
@@ -72,8 +84,7 @@ public class PsychographyService {
     }
 
     private void copyDtoToEntity(PsychographyDTO dto, Psychography entity) {
-
-        entity.setAuthor(dto.getAuthor());
+        
         entity.setDaughterName(dto.getDaughterName());
         entity.setFatherName(dto.getFatherName());
         entity.setFirstName(dto.getFirstName());
@@ -83,7 +94,10 @@ public class PsychographyService {
         entity.setMotherName(dto.getMotherName());
         entity.setSonName(dto.getSonName());
         entity.setText(dto.getText());
-        entity.setUser(dto.getUser());
         entity.setWifeName(dto.getWifeName());
+
+        Author author = authorRepository.getOne(dto.getAuthor().getId());
+        entity.setAuthor(author);       
+        
     }    
 }

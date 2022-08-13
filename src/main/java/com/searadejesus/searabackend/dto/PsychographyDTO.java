@@ -1,8 +1,10 @@
 package com.searadejesus.searabackend.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.searadejesus.searabackend.entities.Psychography;
 
 public class PsychographyDTO implements Serializable {
@@ -11,7 +13,10 @@ public class PsychographyDTO implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    private Instant moment;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
+    private LocalDate date;
+    
     private String text;
     private String motherName;
     private String fatherName;
@@ -24,11 +29,11 @@ public class PsychographyDTO implements Serializable {
     public PsychographyDTO() {
     }
 
-    public PsychographyDTO(Long id, String firstName, String lastName, Instant moment, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName) {
+    public PsychographyDTO(Long id, String firstName, String lastName, LocalDate date, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.moment = moment;
+        this.date = date;
         this.text = text;
         this.motherName = motherName;
         this.fatherName = fatherName;
@@ -42,7 +47,7 @@ public class PsychographyDTO implements Serializable {
         id = entity.getId();
         firstName = entity.getFirstName();
         lastName = entity.getLastName();
-        moment = entity.getMoment();
+        date = entity.getDate();
         text = entity.getText();
         motherName = entity.getMotherName();
         fatherName = entity.getFatherName();
@@ -77,12 +82,12 @@ public class PsychographyDTO implements Serializable {
         this.lastName = lastName;
     }
 
-    public Instant getMoment() {
-        return this.moment;
+    public LocalDate getDate() {
+        return this.date;
     }
 
-    public void setMoment(Instant moment) {
-        this.moment = moment;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public String getText() {

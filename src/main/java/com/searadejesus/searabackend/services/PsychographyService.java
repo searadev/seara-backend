@@ -90,7 +90,7 @@ public class PsychographyService {
         entity.setFirstName(dto.getFirstName());
         entity.setHusbandName(dto.getHusbandName());
         entity.setLastName(dto.getLastName());
-        entity.setMoment(dto.getMoment());
+        entity.setDate(dto.getDate());
         entity.setMotherName(dto.getMotherName());
         entity.setSonName(dto.getSonName());
         entity.setText(dto.getText());

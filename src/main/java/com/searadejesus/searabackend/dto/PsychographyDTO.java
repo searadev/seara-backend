@@ -2,7 +2,6 @@ package com.searadejesus.searabackend.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.searadejesus.searabackend.entities.Psychography;

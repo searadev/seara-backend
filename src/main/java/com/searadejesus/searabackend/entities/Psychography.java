@@ -3,7 +3,6 @@ package com.searadejesus.searabackend.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Column;

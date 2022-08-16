@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,6 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.searadejesus.searabackend.dto.PsychographyDTO;
 import com.searadejesus.searabackend.dto.PsychographyInsertDTO;
@@ -24,7 +29,9 @@ import com.searadejesus.searabackend.services.exceptions.DataBaseException;
 import com.searadejesus.searabackend.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class PsychographyService {
+public class PsychographyService {    
+
+    public static Logger logger = LoggerFactory.getLogger(PsychographyService.class);
 
     @Autowired
     private PsychographyRepository repository;
@@ -33,7 +40,7 @@ public class PsychographyService {
     private AuthorRepository authorRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository;    
 
     @Transactional(readOnly = true)
     public Page<PsychographyDTO> findAllPaged(Pageable pageable) {
@@ -49,10 +56,14 @@ public class PsychographyService {
     }
 
     @Transactional
-    public PsychographyDTO insert(PsychographyInsertDTO dto) {
+    public PsychographyDTO insert(PsychographyInsertDTO dto) {        
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName(); 
+        User user = userRepository.findByEmail(login);
+
         Psychography entity = new Psychography();
         copyDtoToEntity(dto, entity);
-        User user = userRepository.getOne(dto.getUser().getId());
         entity.setUser(user);
         entity = repository.save(entity);
         return new PsychographyDTO(entity);

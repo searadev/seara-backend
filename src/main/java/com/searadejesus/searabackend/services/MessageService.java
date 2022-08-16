@@ -21,6 +21,9 @@ import com.searadejesus.searabackend.repositories.UserRepository;
 import com.searadejesus.searabackend.services.exceptions.DataBaseException;
 import com.searadejesus.searabackend.services.exceptions.ResourceNotFoundException;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 @Service
 public class MessageService {
 
@@ -45,9 +48,13 @@ public class MessageService {
 
     @Transactional
     public MessageDTO insert(MessageInsertDTO dto) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String login = authentication.getName(); 
+        User user = userRepository.findByEmail(login);
+
         Message entity = new Message();
         copyDtoToEntity(dto, entity);
-        User user = userRepository.getOne(dto.getUser().getId());
         entity.setUser(user);
         entity = repository.save(entity);
         return new MessageDTO(entity);

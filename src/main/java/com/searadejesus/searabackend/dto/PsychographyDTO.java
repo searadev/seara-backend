@@ -1,8 +1,9 @@
 package com.searadejesus.searabackend.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.searadejesus.searabackend.entities.Psychography;
 
 public class PsychographyDTO implements Serializable {
@@ -11,7 +12,10 @@ public class PsychographyDTO implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    private Instant moment;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
+    private LocalDate date;
+    
     private String text;
     private String motherName;
     private String fatherName;
@@ -19,33 +23,30 @@ public class PsychographyDTO implements Serializable {
     private String husbandName;
     private String daughterName;
     private String sonName;
-    private AuthorDTO authorDto;
-    private UserDTO userDto;
+    private AuthorDTO author;
 
     public PsychographyDTO() {
     }
 
-    public PsychographyDTO(Long id, String firstName, String lastName, Instant moment, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, AuthorDTO authorDto, UserDTO userDto) {
+    public PsychographyDTO(Long id, String firstName, String lastName, LocalDate date, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.moment = moment;
+        this.date = date;
         this.text = text;
         this.motherName = motherName;
         this.fatherName = fatherName;
         this.wifeName = wifeName;
         this.husbandName = husbandName;
         this.daughterName = daughterName;
-        this.sonName = sonName;
-        this.authorDto = authorDto;
-        this.userDto = userDto;
+        this.sonName = sonName;        
     }
 
     public PsychographyDTO(Psychography entity){
         id = entity.getId();
         firstName = entity.getFirstName();
         lastName = entity.getLastName();
-        moment = entity.getMoment();
+        date = entity.getDate();
         text = entity.getText();
         motherName = entity.getMotherName();
         fatherName = entity.getFatherName();
@@ -53,8 +54,7 @@ public class PsychographyDTO implements Serializable {
         husbandName = entity.getHusbandName();
         daughterName = entity.getDaughterName();
         sonName = entity.getSonName();
-        authorDto = new AuthorDTO(entity.getAuthor()) ;
-        userDto = new UserDTO(entity.getUser()) ;
+        this.author = new AuthorDTO(entity.getAuthor());
     }
 
     public Long getId() {
@@ -81,12 +81,12 @@ public class PsychographyDTO implements Serializable {
         this.lastName = lastName;
     }
 
-    public Instant getMoment() {
-        return this.moment;
+    public LocalDate getDate() {
+        return this.date;
     }
 
-    public void setMoment(Instant moment) {
-        this.moment = moment;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public String getText() {
@@ -145,20 +145,11 @@ public class PsychographyDTO implements Serializable {
         this.sonName = sonName;
     }
 
-    public AuthorDTO getAuthorDto() {
-        return this.authorDto;
+    public AuthorDTO getAuthor() {
+        return this.author;
     }
 
-    public void setAuthorDto(AuthorDTO authorDto) {
-        this.authorDto = authorDto;
-    }
-
-    public UserDTO getUserDto() {
-        return this.userDto;
-    }
-
-    public void setUserDto(UserDTO userDto) {
-        this.userDto = userDto;
-    }
-        
+    public void setAuthor(AuthorDTO author) {
+        this.author = author;
+    }   
 }

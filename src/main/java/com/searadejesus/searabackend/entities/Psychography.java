@@ -2,6 +2,7 @@ package com.searadejesus.searabackend.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -11,7 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "tb_psychography")
@@ -23,9 +28,16 @@ public class Psychography implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
+    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate date;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant moment;
+    private Instant createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant updatedAt;
 
     @Column(columnDefinition = "LONGTEXT")
     private String text;
@@ -35,6 +47,7 @@ public class Psychography implements Serializable {
     private String husbandName;
     private String daughterName;
     private String sonName;    
+    
 
     @ManyToOne
     @JoinColumn(name = "author_id")
@@ -46,11 +59,11 @@ public class Psychography implements Serializable {
     public Psychography() {
     }
 
-    public Psychography(Long id, String firstName, String lastName, Instant moment, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, Author author, User user) {
+    public Psychography(Long id, String firstName, String lastName, LocalDate date, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, Author author, User user) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.moment = moment;
+        this.date = date;
         this.text = text;
         this.author = author;
         this.user = user;
@@ -88,13 +101,28 @@ public class Psychography implements Serializable {
         this.lastName = lastName;
     }
 
-    public Instant getMoment() {
-        return this.moment;
+    public LocalDate getDate() {
+        return this.date;
     }
 
-    public void setMoment(Instant moment) {
-        this.moment = moment;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Instant getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return this.updatedAt;
+    }  
 
     public String getText() {
         return this.text;
@@ -168,6 +196,15 @@ public class Psychography implements Serializable {
         this.user = user;
     }
 
+    @PrePersist
+    public void prePersist() {
+        createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = Instant.now();
+    }
 
     @Override
     public boolean equals(Object o) {

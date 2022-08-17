@@ -7,5 +7,7 @@ import com.searadejesus.searabackend.entities.Psychography;
 
 @Repository
 public interface PsychographyRepository extends JpaRepository <Psychography, Long> {
+
+    
     
 }

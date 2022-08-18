@@ -20,7 +20,7 @@ import com.searadejesus.searabackend.dto.ClassInsertDTO;
 import com.searadejesus.searabackend.services.ClassService;
 
 @RestController
-@RequestMapping(value = "/classs")
+@RequestMapping(value = "/classes")
 public class ClassResource {
     
     @Autowired

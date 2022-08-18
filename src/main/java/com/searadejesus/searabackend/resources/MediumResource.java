@@ -20,7 +20,7 @@ import com.searadejesus.searabackend.services.MediumService;
 
 
 @RestController
-@RequestMapping(value = "/authors")
+@RequestMapping(value = "/mediuns")
 public class MediumResource {
 
     @Autowired

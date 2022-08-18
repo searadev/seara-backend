@@ -18,10 +18,12 @@ import com.searadejesus.searabackend.entities.Class;
 import com.searadejesus.searabackend.entities.User;
 import com.searadejesus.searabackend.repositories.ClassRepository;
 import com.searadejesus.searabackend.repositories.MediumRepository;
+import com.searadejesus.searabackend.repositories.ModuleRepository;
 import com.searadejesus.searabackend.repositories.UserRepository;
 import com.searadejesus.searabackend.services.exceptions.DataBaseException;
 import com.searadejesus.searabackend.services.exceptions.ResourceNotFoundException;
 import com.searadejesus.searabackend.entities.Medium;
+import com.searadejesus.searabackend.entities.Module;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +33,9 @@ public class ClassService {
 
     @Autowired
     private ClassRepository repository;
+
+    @Autowired
+    private ModuleRepository moduleRepository;
 
     @Autowired
     private MediumRepository mediumRepository;
@@ -94,7 +99,10 @@ public class ClassService {
         
         entity.setDate(dto.getDate());
         entity.setTitle(dto.getTitle());
-        entity.setUri(dto.getUri());        
+        entity.setUri(dto.getUri());  
+        
+        Module module = moduleRepository.getOne(dto.getMedium().getId());
+        entity.setModule(module);
 
         Medium medium = mediumRepository.getOne(dto.getMedium().getId());
         entity.setMedium(medium);   

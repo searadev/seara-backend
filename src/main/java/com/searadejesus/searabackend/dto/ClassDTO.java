@@ -5,7 +5,6 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.searadejesus.searabackend.entities.Class;
-import com.searadejesus.searabackend.entities.User;
 
 public class ClassDTO implements Serializable {
     private static final long serialVersionUID = 1L;

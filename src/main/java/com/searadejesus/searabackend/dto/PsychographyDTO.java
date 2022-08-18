@@ -3,6 +3,9 @@ package com.searadejesus.searabackend.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.searadejesus.searabackend.entities.Psychography;
 
@@ -10,12 +13,16 @@ public class PsychographyDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    @NotBlank(message = "Campo obrigatório")
     private String firstName;
     private String lastName;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
+    @PastOrPresent(message = "A data não pode estar no futuro")
     private LocalDate date;
     
+    @NotBlank(message = "Campo obrigatório")
     private String text;
     private String motherName;
     private String fatherName;

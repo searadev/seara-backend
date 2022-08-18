@@ -31,7 +31,6 @@ public class Class implements Serializable {
     private String uri;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
-    //@DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate date;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")

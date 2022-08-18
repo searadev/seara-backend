@@ -87,7 +87,9 @@ public class MessageService {
 
     private void copyDtoToEntity(MessageDTO dto, Message entity) {
 
-        entity.setText(dto.getText());       
+        entity.setText(dto.getText());  
+        entity.setDate(dto.getDate());
+        entity.setFullName(dto.getFullName()); 
         
     }
     

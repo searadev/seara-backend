@@ -3,6 +3,9 @@ package com.searadejesus.searabackend.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.searadejesus.searabackend.entities.Class;
 
@@ -10,11 +13,14 @@ public class ClassDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+    
+    @NotBlank(message = "Campo obrigatório")
     private String title;
+    @NotBlank(message = "Campo obrigatório")
     private String uri;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
-    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    @PastOrPresent(message = "A data não pode ser futura")
     private LocalDate date;
 
     private ModuleDTO module;

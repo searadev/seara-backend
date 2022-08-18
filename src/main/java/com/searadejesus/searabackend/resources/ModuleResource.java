@@ -15,32 +15,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.searadejesus.searabackend.dto.AuthorDTO;
-import com.searadejesus.searabackend.services.AuthorService;
-
+import com.searadejesus.searabackend.dto.ModuleDTO;
+import com.searadejesus.searabackend.services.ModuleService;
 
 @RestController
-@RequestMapping(value = "/authors")
-public class AuthorResource {
-
+@RequestMapping(value = "/modules")
+public class ModuleResource {
+    
     @Autowired
-    private AuthorService service;
+    private ModuleService service;
 
     @GetMapping
-    public ResponseEntity<Page<AuthorDTO>> findAll(Pageable pageable) {
-        Page<AuthorDTO> list = service.findAllPaged(pageable);
+    public ResponseEntity<Page<ModuleDTO>> findAll(Pageable pageable) {
+        Page<ModuleDTO> list = service.findAllPaged(pageable);
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AuthorDTO> findById(@PathVariable Long id) {
-        AuthorDTO dto = service.findById(id);
+    public ResponseEntity<ModuleDTO> findById(@PathVariable Long id) {
+        ModuleDTO dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
     }
 
     @PostMapping
-    public ResponseEntity<AuthorDTO> insert(@RequestBody AuthorDTO dto) {
-        AuthorDTO newDto = service.insert(dto);
+    public ResponseEntity<ModuleDTO> insert(@RequestBody ModuleDTO dto) {
+        ModuleDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDto.getId()).toUri();
         return ResponseEntity.created(uri).body(newDto);
@@ -48,7 +47,7 @@ public class AuthorResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<AuthorDTO> update(@PathVariable Long id, @RequestBody AuthorDTO dto){
+    public ResponseEntity<ModuleDTO> update(@PathVariable Long id, @RequestBody ModuleDTO dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
@@ -57,5 +56,5 @@ public class AuthorResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
-    }    
+    }
 }

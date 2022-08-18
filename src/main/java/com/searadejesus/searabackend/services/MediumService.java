@@ -12,47 +12,47 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.searadejesus.searabackend.dto.AuthorDTO;
-import com.searadejesus.searabackend.entities.Author;
-import com.searadejesus.searabackend.repositories.AuthorRepository;
+import com.searadejesus.searabackend.dto.MediumDTO;
+import com.searadejesus.searabackend.entities.Medium;
+import com.searadejesus.searabackend.repositories.MediumRepository;
 
 import com.searadejesus.searabackend.services.exceptions.DataBaseException;
 import com.searadejesus.searabackend.services.exceptions.ResourceNotFoundException;
 
 @Service
-public class AuthorService {
+public class MediumService {
 
     @Autowired
-    private AuthorRepository repository;
+    private MediumRepository repository;
 
     @Transactional(readOnly = true)
-    public Page<AuthorDTO> findAllPaged(Pageable pageable) {
-        Page<Author> list = repository.findAll(pageable);
-        return list.map(x -> new AuthorDTO(x));
+    public Page<MediumDTO> findAllPaged(Pageable pageable) {
+        Page<Medium> list = repository.findAll(pageable);
+        return list.map(x -> new MediumDTO(x));
     }
 
     @Transactional(readOnly = true)
-    public AuthorDTO findById(Long id) {
-        Optional<Author> obj = repository.findById(id);
-        Author entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-        return new AuthorDTO(entity);
+    public MediumDTO findById(Long id) {
+        Optional<Medium> obj = repository.findById(id);
+        Medium entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        return new MediumDTO(entity);
     }    
 
     @Transactional
-    public AuthorDTO insert(AuthorDTO dto) {
-        Author entity = new Author();
+    public MediumDTO insert(MediumDTO dto) {
+        Medium entity = new Medium();
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
-        return new AuthorDTO(entity);
+        return new MediumDTO(entity);
     }    
 
     @Transactional
-    public AuthorDTO update(Long id, AuthorDTO dto) {
+    public MediumDTO update(Long id, MediumDTO dto) {
         try {
-            Author entity = repository.getOne(id);
+            Medium entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
                 entity = repository.save(entity);
-                return new AuthorDTO(entity);
+                return new MediumDTO(entity);
         } 
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found" + id);
@@ -71,7 +71,7 @@ public class AuthorService {
         }
     }
 
-    private void copyDtoToEntity(AuthorDTO dto, Author entity) {
+    private void copyDtoToEntity(MediumDTO dto, Medium entity) {
 
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());

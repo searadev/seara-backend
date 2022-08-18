@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "tb_psychography")
+@Table(name = "psychography")
 public class Psychography implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -50,8 +50,9 @@ public class Psychography implements Serializable {
     
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
-    private Author author;
+    @JoinColumn(name = "medium_id")
+    private Medium medium;
+    
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -59,13 +60,12 @@ public class Psychography implements Serializable {
     public Psychography() {
     }
 
-    public Psychography(Long id, String firstName, String lastName, LocalDate date, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, Author author, User user) {
+    public Psychography(Long id, String firstName, String lastName, LocalDate date, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, Medium medium, User user) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.date = date;
         this.text = text;
-        this.author = author;
         this.user = user;
         this.motherName = motherName;
         this.fatherName = fatherName;
@@ -73,7 +73,7 @@ public class Psychography implements Serializable {
         this.husbandName = husbandName;
         this.daughterName = daughterName;
         this.sonName = sonName;
-        this.author = author;
+        this.medium = medium;
         this.user = user;
     }
 
@@ -180,12 +180,12 @@ public class Psychography implements Serializable {
         this.sonName = sonName;
     }
 
-    public Author getAuthor() {
-        return this.author;
+    public Medium getMedium() {
+        return this.medium;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setMedium(Medium medium) {
+        this.medium = medium;
     }
 
     public User getUser() {

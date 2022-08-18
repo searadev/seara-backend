@@ -13,6 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.Instant;
 
 @Entity
@@ -23,7 +28,14 @@ public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(columnDefinition = "LONGTEXT")
     private String text;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
+    private LocalDate date;
+
+    private String fullName;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
@@ -38,11 +50,15 @@ public class Message implements Serializable {
     public Message() {
     }
 
-    public Message(Long id, String text, User user) {
+    public Message(Long id, String text, LocalDate date, String fullName, Instant createdAt, Instant updatedAt, User user) {
         this.id = id;
         this.text = text;
+        this.date = date;
+        this.fullName = fullName;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.user = user;
-    }
+    }    
 
     public Long getId() {
         return this.id;
@@ -60,12 +76,36 @@ public class Message implements Serializable {
         this.text = text;
     }
 
+    public LocalDate getDate() {
+        return this.date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public String getFullName() {
+        return this.fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public Instant getCreatedAt() {
         return this.createdAt;
     }
 
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Instant getUpdatedAt() {
         return this.updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public User getUser() {
@@ -74,7 +114,7 @@ public class Message implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
+    }    
 
     @PrePersist
     public void prePersist() {

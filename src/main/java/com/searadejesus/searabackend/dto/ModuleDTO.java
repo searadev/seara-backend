@@ -2,12 +2,16 @@ package com.searadejesus.searabackend.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 import com.searadejesus.searabackend.entities.Module;
 
 public class ModuleDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    @NotBlank(message = "Campo obrigatório")
     private String name; 
 
     public ModuleDTO() {

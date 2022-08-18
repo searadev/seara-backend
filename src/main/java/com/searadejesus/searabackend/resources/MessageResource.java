@@ -1,6 +1,8 @@
 package com.searadejesus.searabackend.resources;
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +41,7 @@ public class MessageResource {
     }
 
     @PostMapping
-    public ResponseEntity<MessageDTO> insert(@RequestBody MessageInsertDTO dto) {
+    public ResponseEntity<MessageDTO> insert(@Valid @RequestBody MessageInsertDTO dto) {
         MessageDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDto.getId()).toUri();
@@ -48,7 +50,7 @@ public class MessageResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<MessageDTO> update(@PathVariable Long id, @RequestBody MessageDTO dto){
+    public ResponseEntity<MessageDTO> update(@Valid @PathVariable Long id, @RequestBody MessageDTO dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }

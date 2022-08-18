@@ -1,6 +1,8 @@
 package com.searadejesus.searabackend.resources;
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +41,7 @@ public class ClassResource {
     }
 
     @PostMapping
-    public ResponseEntity<ClassDTO> insert(@RequestBody ClassInsertDTO dto) {
+    public ResponseEntity<ClassDTO> insert(@Valid @RequestBody ClassInsertDTO dto) {
         ClassDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDto.getId()).toUri();
@@ -48,7 +50,7 @@ public class ClassResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ClassDTO> update(@PathVariable Long id, @RequestBody ClassDTO dto){
+    public ResponseEntity<ClassDTO> update(@Valid @PathVariable Long id, @RequestBody ClassDTO dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }

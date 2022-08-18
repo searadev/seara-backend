@@ -9,25 +9,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name = "tb_author")
-public class Author implements Serializable {
+@Table(name = "module")
+public class Module implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;    
+    private String name;    
 
-    public Author() {
+    public Module() {
     }
 
-    public Author(Long id, String firstName, String lastName) {
+    public Module(Long id, String name) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
     }
 
     public Long getId() {
@@ -38,35 +35,27 @@ public class Author implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return this.firstName;
+    public String getName() {
+        return this.name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }       
 
     @Override
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof Author)) {
+        if (!(o instanceof Module)) {
             return false;
         }
-        Author author = (Author) o;
-        return Objects.equals(id, author.id);
+        Module module = (Module) o;
+        return Objects.equals(id, module.id) && Objects.equals(name, module.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name);
     }    
 }

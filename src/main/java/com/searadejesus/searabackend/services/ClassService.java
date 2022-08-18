@@ -4,8 +4,6 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,68 +12,66 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import com.searadejesus.searabackend.dto.PsychographyDTO;
-import com.searadejesus.searabackend.dto.PsychographyInsertDTO;
-import com.searadejesus.searabackend.entities.Medium;
-import com.searadejesus.searabackend.entities.Psychography;
+import com.searadejesus.searabackend.dto.ClassDTO;
+import com.searadejesus.searabackend.dto.ClassInsertDTO;
+import com.searadejesus.searabackend.entities.Class;
 import com.searadejesus.searabackend.entities.User;
+import com.searadejesus.searabackend.repositories.ClassRepository;
 import com.searadejesus.searabackend.repositories.MediumRepository;
-import com.searadejesus.searabackend.repositories.PsychographyRepository;
 import com.searadejesus.searabackend.repositories.UserRepository;
 import com.searadejesus.searabackend.services.exceptions.DataBaseException;
 import com.searadejesus.searabackend.services.exceptions.ResourceNotFoundException;
+import com.searadejesus.searabackend.entities.Medium;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
-public class PsychographyService {    
-
-    public static Logger logger = LoggerFactory.getLogger(PsychographyService.class);
+public class ClassService {
 
     @Autowired
-    private PsychographyRepository repository;
+    private ClassRepository repository;
 
     @Autowired
     private MediumRepository mediumRepository;
 
     @Autowired
-    private UserRepository userRepository;    
+    private UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public Page<PsychographyDTO> findAllPaged(Pageable pageable) {
-        Page<Psychography> list = repository.findAll(pageable);
-        return list.map(x -> new PsychographyDTO(x));
+    public Page<ClassDTO> findAllPaged(Pageable pageable) {
+        Page<Class> list = repository.findAll(pageable);
+        return list.map(x -> new ClassDTO(x));
     }
 
     @Transactional(readOnly = true)
-    public PsychographyDTO findById(Long id) {
-        Optional<Psychography> obj = repository.findById(id);
-        Psychography entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-        return new PsychographyDTO(entity);
+    public ClassDTO findById(Long id) {
+        Optional<Class> obj = repository.findById(id);
+        Class entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        return new ClassDTO(entity);
     }
 
     @Transactional
-    public PsychographyDTO insert(PsychographyInsertDTO dto) {        
+    public ClassDTO insert(ClassInsertDTO dto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName(); 
         User user = userRepository.findByEmail(login);
 
-        Psychography entity = new Psychography();
+        Class entity = new Class();
         copyDtoToEntity(dto, entity);
         entity.setUser(user);
         entity = repository.save(entity);
-        return new PsychographyDTO(entity);
+        return new ClassDTO(entity);
     }    
 
     @Transactional
-    public PsychographyDTO update(Long id, PsychographyDTO dto) {
+    public ClassDTO update(Long id, ClassDTO dto) {
         try {
-            Psychography entity = repository.getOne(id);
+            Class entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
                 entity = repository.save(entity);
-                return new PsychographyDTO(entity);
+                return new ClassDTO(entity);
         } 
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found" + id);
@@ -94,21 +90,15 @@ public class PsychographyService {
         }
     }
 
-    private void copyDtoToEntity(PsychographyDTO dto, Psychography entity) {
+    private void copyDtoToEntity(ClassDTO dto, Class entity) {
         
-        entity.setDaughterName(dto.getDaughterName());
-        entity.setFatherName(dto.getFatherName());
-        entity.setFirstName(dto.getFirstName());
-        entity.setHusbandName(dto.getHusbandName());
-        entity.setLastName(dto.getLastName());
         entity.setDate(dto.getDate());
-        entity.setMotherName(dto.getMotherName());
-        entity.setSonName(dto.getSonName());
-        entity.setText(dto.getText());
-        entity.setWifeName(dto.getWifeName());
+        entity.setTitle(dto.getTitle());
+        entity.setUri(dto.getUri());        
 
         Medium medium = mediumRepository.getOne(dto.getMedium().getId());
         entity.setMedium(medium);   
         
-    }    
+    }
+    
 }

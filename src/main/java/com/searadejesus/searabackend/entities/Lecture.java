@@ -13,17 +13,26 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "message")
-public class Message implements Serializable {
+@Table(name = "lecture")
+public class Lecture implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String text;
+    private String title;
+    private String uri;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
+    //@DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate date;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
@@ -32,17 +41,26 @@ public class Message implements Serializable {
     private Instant updatedAt;
     
     @ManyToOne
+    @JoinColumn(name = "medium_id")
+    private Medium medium;
+
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Message() {
+    public Lecture() {
     }
 
-    public Message(Long id, String text, User user) {
+    public Lecture(Long id, String title, String uri, LocalDate date, Instant createdAt, Instant updatedAt, Medium medium, User user) {
         this.id = id;
-        this.text = text;
+        this.title = title;
+        this.uri = uri;
+        this.date = date;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.medium = medium;
         this.user = user;
-    }
+    }    
 
     public Long getId() {
         return this.id;
@@ -52,20 +70,52 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public String getText() {
-        return this.text;
+    public String getTitle() {
+        return this.title;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUri() {
+        return this.uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public LocalDate getDate() {
+        return this.date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Instant getCreatedAt() {
         return this.createdAt;
     }
 
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public Instant getUpdatedAt() {
         return this.updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Medium getMedium() {
+        return this.medium;
+    }
+
+    public void setMedium(Medium medium) {
+        this.medium = medium;
     }
 
     public User getUser() {
@@ -90,11 +140,11 @@ public class Message implements Serializable {
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof Message)) {
+        if (!(o instanceof Lecture)) {
             return false;
         }
-        Message message = (Message) o;
-        return Objects.equals(id, message.id);
+        Lecture Lecture = (Lecture) o;
+        return Objects.equals(id, Lecture.id);
     }
 
     @Override

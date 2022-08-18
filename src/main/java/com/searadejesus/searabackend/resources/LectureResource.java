@@ -3,9 +3,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,36 +12,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.searadejesus.searabackend.dto.PsychographyDTO;
-import com.searadejesus.searabackend.dto.PsychographyInsertDTO;
-import com.searadejesus.searabackend.services.PsychographyService;
+import com.searadejesus.searabackend.dto.LectureDTO;
+import com.searadejesus.searabackend.dto.LectureInsertDTO;
+import com.searadejesus.searabackend.services.LectureService;
 
 @RestController
-@RequestMapping(value = "/psychographys")
-public class PsychographyResource {
+@RequestMapping(value = "/lectures")
+public class LectureResource {
     
     @Autowired
-    private PsychographyService service;
+    private LectureService service;
 
     @GetMapping
-    public ResponseEntity<Page<PsychographyDTO>> findAll(Pageable pageable) {
-        Page<PsychographyDTO> list = service.findAllPaged(pageable);
+    public ResponseEntity<Page<LectureDTO>> findAll(Pageable pageable) {
+        Page<LectureDTO> list = service.findAllPaged(pageable);
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PsychographyDTO> findById(@PathVariable Long id) {
-        PsychographyDTO dto = service.findById(id);
+    public ResponseEntity<LectureDTO> findById(@PathVariable Long id) {
+        LectureDTO dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
     }
 
     @PostMapping
-    public ResponseEntity<PsychographyDTO> insert(@RequestBody PsychographyInsertDTO dto) {
-        PsychographyDTO newDto = service.insert(dto);
+    public ResponseEntity<LectureDTO> insert(@RequestBody LectureInsertDTO dto) {
+        LectureDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDto.getId()).toUri();
         return ResponseEntity.created(uri).body(newDto);
@@ -51,7 +48,7 @@ public class PsychographyResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<PsychographyDTO> update(@PathVariable Long id, @RequestBody PsychographyDTO dto){
+    public ResponseEntity<LectureDTO> update(@PathVariable Long id, @RequestBody LectureDTO dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }

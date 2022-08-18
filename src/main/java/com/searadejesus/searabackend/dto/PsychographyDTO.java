@@ -23,7 +23,7 @@ public class PsychographyDTO implements Serializable {
     private String husbandName;
     private String daughterName;
     private String sonName;
-    private AuthorDTO author;
+    private MediumDTO medium;
 
     public PsychographyDTO() {
     }
@@ -54,7 +54,7 @@ public class PsychographyDTO implements Serializable {
         husbandName = entity.getHusbandName();
         daughterName = entity.getDaughterName();
         sonName = entity.getSonName();
-        this.author = new AuthorDTO(entity.getAuthor());
+        this.medium = new MediumDTO(entity.getMedium());
     }
 
     public Long getId() {
@@ -145,11 +145,11 @@ public class PsychographyDTO implements Serializable {
         this.sonName = sonName;
     }
 
-    public AuthorDTO getAuthor() {
-        return this.author;
+    public MediumDTO getMedium() {
+        return this.medium;
     }
 
-    public void setAuthor(AuthorDTO author) {
-        this.author = author;
+    public void setMedium(MediumDTO medium) {
+        this.medium = medium;
     }   
 }

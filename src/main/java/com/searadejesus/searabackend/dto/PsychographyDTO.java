@@ -15,8 +15,7 @@ public class PsychographyDTO implements Serializable {
     private Long id;
 
     @NotBlank(message = "Campo obrigatório")
-    private String firstName;
-    private String lastName;
+    private String fullName;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
     @PastOrPresent(message = "A data não pode estar no futuro")
@@ -24,43 +23,24 @@ public class PsychographyDTO implements Serializable {
     
     @NotBlank(message = "Campo obrigatório")
     private String text;
-    private String motherName;
-    private String fatherName;
-    private String wifeName;
-    private String husbandName;
-    private String daughterName;
-    private String sonName;
     private MediumDTO medium;
 
     public PsychographyDTO() {
     }
 
-    public PsychographyDTO(Long id, String firstName, String lastName, LocalDate date, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName) {
+    public PsychographyDTO(Long id, String fullName, LocalDate date, String text, MediumDTO medium) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.fullName = fullName;
         this.date = date;
         this.text = text;
-        this.motherName = motherName;
-        this.fatherName = fatherName;
-        this.wifeName = wifeName;
-        this.husbandName = husbandName;
-        this.daughterName = daughterName;
-        this.sonName = sonName;        
-    }
+        this.medium = medium;
+    }    
 
     public PsychographyDTO(Psychography entity){
         id = entity.getId();
-        firstName = entity.getFirstName();
-        lastName = entity.getLastName();
+        fullName = entity.getFullName();
         date = entity.getDate();
         text = entity.getText();
-        motherName = entity.getMotherName();
-        fatherName = entity.getFatherName();
-        wifeName = entity.getWifeName();
-        husbandName = entity.getHusbandName();
-        daughterName = entity.getDaughterName();
-        sonName = entity.getSonName();
         this.medium = new MediumDTO(entity.getMedium());
     }
 
@@ -72,20 +52,12 @@ public class PsychographyDTO implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return this.firstName;
+    public String getFullName() {
+        return this.fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public LocalDate getDate() {
@@ -104,59 +76,11 @@ public class PsychographyDTO implements Serializable {
         this.text = text;
     }
 
-    public String getMotherName() {
-        return this.motherName;
-    }
-
-    public void setMotherName(String motherName) {
-        this.motherName = motherName;
-    }
-
-    public String getFatherName() {
-        return this.fatherName;
-    }
-
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
-    }
-
-    public String getWifeName() {
-        return this.wifeName;
-    }
-
-    public void setWifeName(String wifeName) {
-        this.wifeName = wifeName;
-    }
-
-    public String getHusbandName() {
-        return this.husbandName;
-    }
-
-    public void setHusbandName(String husbandName) {
-        this.husbandName = husbandName;
-    }
-
-    public String getDaughterName() {
-        return this.daughterName;
-    }
-
-    public void setDaughterName(String daughterName) {
-        this.daughterName = daughterName;
-    }
-
-    public String getSonName() {
-        return this.sonName;
-    }
-
-    public void setSonName(String sonName) {
-        this.sonName = sonName;
-    }
-
     public MediumDTO getMedium() {
         return this.medium;
     }
 
     public void setMedium(MediumDTO medium) {
         this.medium = medium;
-    }   
+    }       
 }

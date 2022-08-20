@@ -26,29 +26,21 @@ public class Psychography implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
+    private String fullName;    
     
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
     //@DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate date;
 
+    @Column(columnDefinition = "LONGTEXT")
+    private String text;
+
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant updatedAt;
-
-    @Column(columnDefinition = "LONGTEXT")
-    private String text;
-    private String motherName;
-    private String fatherName;
-    private String wifeName;
-    private String husbandName;
-    private String daughterName;
-    private String sonName;    
+    private Instant updatedAt;    
     
-
     @ManyToOne
     @JoinColumn(name = "medium_id")
     private Medium medium;
@@ -60,19 +52,11 @@ public class Psychography implements Serializable {
     public Psychography() {
     }
 
-    public Psychography(Long id, String firstName, String lastName, LocalDate date, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName, Medium medium, User user) {
+    public Psychography(Long id, String fullName, LocalDate date, Instant createdAt, Instant updatedAt, String text, Medium medium, User user) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.fullName = fullName;
         this.date = date;
         this.text = text;
-        this.user = user;
-        this.motherName = motherName;
-        this.fatherName = fatherName;
-        this.wifeName = wifeName;
-        this.husbandName = husbandName;
-        this.daughterName = daughterName;
-        this.sonName = sonName;
         this.medium = medium;
         this.user = user;
     }
@@ -85,20 +69,12 @@ public class Psychography implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return this.firstName;
+    public String getFullName() {
+        return this.fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public LocalDate getDate() {
@@ -108,76 +84,13 @@ public class Psychography implements Serializable {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Instant getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return this.updatedAt;
-    }  
-
+    
     public String getText() {
         return this.text;
     }
 
     public void setText(String text) {
         this.text = text;
-    }    
-
-    public String getMotherName() {
-        return this.motherName;
-    }
-
-    public void setMotherName(String motherName) {
-        this.motherName = motherName;
-    }
-
-    public String getFatherName() {
-        return this.fatherName;
-    }
-
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
-    }
-
-    public String getWifeName() {
-        return this.wifeName;
-    }
-
-    public void setWifeName(String wifeName) {
-        this.wifeName = wifeName;
-    }
-
-    public String getHusbandName() {
-        return this.husbandName;
-    }
-
-    public void setHusbandName(String husbandName) {
-        this.husbandName = husbandName;
-    }
-
-    public String getDaughterName() {
-        return this.daughterName;
-    }
-
-    public void setDaughterName(String daughterName) {
-        this.daughterName = daughterName;
-    }
-
-    public String getSonName() {
-        return this.sonName;
-    }
-
-    public void setSonName(String sonName) {
-        this.sonName = sonName;
     }
 
     public Medium getMedium() {

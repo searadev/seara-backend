@@ -96,16 +96,10 @@ public class PsychographyService {
 
     private void copyDtoToEntity(PsychographyDTO dto, Psychography entity) {
         
-        entity.setDaughterName(dto.getDaughterName());
-        entity.setFatherName(dto.getFatherName());
-        entity.setFirstName(dto.getFirstName());
-        entity.setHusbandName(dto.getHusbandName());
-        entity.setLastName(dto.getLastName());
+        
+        entity.setFullName(dto.getFullName());        
         entity.setDate(dto.getDate());
-        entity.setMotherName(dto.getMotherName());
-        entity.setSonName(dto.getSonName());
         entity.setText(dto.getText());
-        entity.setWifeName(dto.getWifeName());
 
         Medium medium = mediumRepository.getOne(dto.getMedium().getId());
         entity.setMedium(medium);   

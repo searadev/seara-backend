@@ -16,32 +16,36 @@ public class PsychographyDTO implements Serializable {
 
     @NotBlank(message = "Campo obrigatório")
     private String fullName;
+    @NotBlank(message = "Campo obrigatório")
+    private String text;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
     @PastOrPresent(message = "A data não pode estar no futuro")
-    private LocalDate date;
+    private LocalDate date;    
     
-    @NotBlank(message = "Campo obrigatório")
-    private String text;
     private MediumDTO medium;
+
+    private Boolean status;
 
     public PsychographyDTO() {
     }
 
-    public PsychographyDTO(Long id, String fullName, LocalDate date, String text, MediumDTO medium) {
+    public PsychographyDTO(Long id, String fullName, LocalDate date, String text, MediumDTO medium, Boolean status) {
         this.id = id;
         this.fullName = fullName;
         this.date = date;
         this.text = text;
         this.medium = medium;
+        this.status = status;
     }    
 
     public PsychographyDTO(Psychography entity){
         id = entity.getId();
         fullName = entity.getFullName();
-        date = entity.getDate();
         text = entity.getText();
+        date = entity.getDate();        
         this.medium = new MediumDTO(entity.getMedium());
+        this.status = entity.getStatus();
     }
 
     public Long getId() {
@@ -82,5 +86,17 @@ public class PsychographyDTO implements Serializable {
 
     public void setMedium(MediumDTO medium) {
         this.medium = medium;
-    }       
+    }  
+
+    public Boolean isStatus() {
+        return this.status;
+    }
+
+    public Boolean getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 }

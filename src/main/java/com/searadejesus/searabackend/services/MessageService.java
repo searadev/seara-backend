@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.searadejesus.searabackend.dto.MessageDTO;
 import com.searadejesus.searabackend.dto.MessageInsertDTO;
+import com.searadejesus.searabackend.entities.Medium;
 import com.searadejesus.searabackend.entities.Message;
 import com.searadejesus.searabackend.entities.User;
+import com.searadejesus.searabackend.repositories.MediumRepository;
 import com.searadejesus.searabackend.repositories.MessageRepository;
 import com.searadejesus.searabackend.repositories.UserRepository;
 import com.searadejesus.searabackend.services.exceptions.DataBaseException;
@@ -29,6 +31,9 @@ public class MessageService {
 
     @Autowired
     private MessageRepository repository;
+
+    @Autowired
+    private MediumRepository mediumRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -87,10 +92,11 @@ public class MessageService {
 
     private void copyDtoToEntity(MessageDTO dto, Message entity) {
 
+        entity.setFullName(dto.getFullName());
         entity.setText(dto.getText());  
         entity.setDate(dto.getDate());
-        entity.setFullName(dto.getFullName()); 
-        
-    }
-    
+        Medium medium = mediumRepository.getOne(dto.getMedium().getId());
+        entity.setMedium(medium);
+        entity.setStatus(dto.getStatus());
+    }    
 }

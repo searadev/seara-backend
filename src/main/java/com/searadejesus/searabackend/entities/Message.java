@@ -42,23 +42,29 @@ public class Message implements Serializable {
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "medium_id")
+    private Medium medium;
     
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    private Boolean status; 
+
     public Message() {
     }
 
-    public Message(Long id, String text, LocalDate date, String fullName, Instant createdAt, Instant updatedAt, User user) {
+    public Message(Long id, String text, LocalDate date, String fullName, Medium medium, User user, Boolean status) {
         this.id = id;
         this.text = text;
         this.date = date;
         this.fullName = fullName;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.medium = medium;
         this.user = user;
-    }    
+        this.status = status;
+    }
 
     public Long getId() {
         return this.id;
@@ -90,7 +96,23 @@ public class Message implements Serializable {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }    
+
+    public Medium getMedium() {
+        return this.medium;
     }
+
+    public void setMedium(Medium medium) {
+        this.medium = medium;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    } 
 
     public Instant getCreatedAt() {
         return this.createdAt;
@@ -108,13 +130,17 @@ public class Message implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public User getUser() {
-        return this.user;
+    public Boolean isStatus() {
+        return this.status;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }    
+    public Boolean getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }          
 
     @PrePersist
     public void prePersist() {

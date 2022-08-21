@@ -49,16 +49,19 @@ public class Psychography implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private Boolean status;
+
     public Psychography() {
     }
 
-    public Psychography(Long id, String fullName, LocalDate date, Instant createdAt, Instant updatedAt, String text, Medium medium, User user) {
+    public Psychography(Long id, String fullName, LocalDate date, String text, Medium medium, User user, Boolean status) {
         this.id = id;
         this.fullName = fullName;
         this.date = date;
         this.text = text;
         this.medium = medium;
         this.user = user;
+        this.status = status;
     }
 
     public Long getId() {
@@ -107,6 +110,34 @@ public class Psychography implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Instant getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return this.updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Boolean isStatus() {
+        return this.status;
+    }
+
+    public Boolean getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @PrePersist

@@ -95,14 +95,12 @@ public class PsychographyService {
     }
 
     private void copyDtoToEntity(PsychographyDTO dto, Psychography entity) {
-        
-        
-        entity.setFullName(dto.getFullName());        
+                
+        entity.setFullName(dto.getFullName()); 
+        entity.setText(dto.getText());       
         entity.setDate(dto.getDate());
-        entity.setText(dto.getText());
-
         Medium medium = mediumRepository.getOne(dto.getMedium().getId());
-        entity.setMedium(medium);   
-        
+        entity.setMedium(medium);  
+        entity.setStatus(dto.getStatus());         
     }    
 }

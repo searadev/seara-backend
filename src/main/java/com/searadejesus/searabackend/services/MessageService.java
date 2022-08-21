@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.searadejesus.searabackend.dto.MessageDTO;
 import com.searadejesus.searabackend.dto.MessageInsertDTO;
+import com.searadejesus.searabackend.dto.MessagePagedDTO;
 import com.searadejesus.searabackend.entities.Medium;
 import com.searadejesus.searabackend.entities.Message;
 import com.searadejesus.searabackend.entities.User;
@@ -39,9 +40,9 @@ public class MessageService {
     private UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public Page<MessageDTO> findAllPaged(Pageable pageable, String fullName, String text) {
+    public Page<MessagePagedDTO> findAllPaged(Pageable pageable, String fullName, String text) {
         Page<Message> list = repository.find(pageable, fullName, text);
-        return list.map(x -> new MessageDTO(x));
+        return list.map(x -> new MessagePagedDTO(x));
     }
 
     @Transactional(readOnly = true)

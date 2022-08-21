@@ -12,23 +12,19 @@ public class MediumDTO implements Serializable {
     private Long id;
 
     @NotBlank(message = "Campo obrigatório")
-    private String firstName;
-    @NotBlank(message = "Campo obrigatório")
-    private String lastName;
+    private String fullName;
 
     public MediumDTO() {
     }
 
-    public MediumDTO(Long id, String firstName, String lastName) {
+    public MediumDTO(Long id, String fullName) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.fullName = fullName;
     }
 
     public MediumDTO(Medium entity) {
         id = entity.getId();
-        firstName = entity.getFirstName();
-        lastName = entity.getLastName();
+        fullName = entity.getFullName();
     }
 
     public Long getId() {
@@ -39,19 +35,12 @@ public class MediumDTO implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return this.firstName;
+    public String getFullName() {
+        return this.fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    } 
+     
 }

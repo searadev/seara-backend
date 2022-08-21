@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.searadejesus.searabackend.dto.PsychographyDTO;
 import com.searadejesus.searabackend.dto.PsychographyInsertDTO;
+import com.searadejesus.searabackend.dto.PsychographyPagedDTO;
 import com.searadejesus.searabackend.entities.Medium;
 import com.searadejesus.searabackend.entities.Psychography;
 import com.searadejesus.searabackend.entities.User;
@@ -43,9 +44,9 @@ public class PsychographyService {
     private UserRepository userRepository;    
 
     @Transactional(readOnly = true)
-    public Page<PsychographyDTO> findAllPaged(Pageable pageable, String fullName, String text) {
+    public Page<PsychographyPagedDTO> findAllPaged(Pageable pageable, String fullName, String text) {
         Page<Psychography> list = repository.find(pageable, fullName, text);
-        return list.map(x -> new PsychographyDTO(x));
+        return list.map(x -> new PsychographyPagedDTO(x));
     }
 
     @Transactional(readOnly = true)

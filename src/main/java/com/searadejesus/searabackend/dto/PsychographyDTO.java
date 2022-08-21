@@ -3,6 +3,9 @@ package com.searadejesus.searabackend.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.searadejesus.searabackend.entities.Psychography;
 
@@ -10,51 +13,39 @@ public class PsychographyDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private String firstName;
-    private String lastName;
+
+    @NotBlank(message = "Campo obrigatório")
+    private String fullName;
+    @NotBlank(message = "Campo obrigatório")
+    private String text;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
-    private LocalDate date;
+    @PastOrPresent(message = "A data não pode estar no futuro")
+    private LocalDate date;    
     
-    private String text;
-    private String motherName;
-    private String fatherName;
-    private String wifeName;
-    private String husbandName;
-    private String daughterName;
-    private String sonName;
-    private AuthorDTO author;
+    private MediumDTO medium;
+
+    private Boolean status;
 
     public PsychographyDTO() {
     }
 
-    public PsychographyDTO(Long id, String firstName, String lastName, LocalDate date, String text, String motherName, String fatherName, String wifeName, String husbandName, String daughterName, String sonName) {
+    public PsychographyDTO(Long id, String fullName, LocalDate date, String text, MediumDTO medium, Boolean status) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.fullName = fullName;
         this.date = date;
         this.text = text;
-        this.motherName = motherName;
-        this.fatherName = fatherName;
-        this.wifeName = wifeName;
-        this.husbandName = husbandName;
-        this.daughterName = daughterName;
-        this.sonName = sonName;        
-    }
+        this.medium = medium;
+        this.status = status;
+    }    
 
     public PsychographyDTO(Psychography entity){
         id = entity.getId();
-        firstName = entity.getFirstName();
-        lastName = entity.getLastName();
-        date = entity.getDate();
+        fullName = entity.getFullName();
         text = entity.getText();
-        motherName = entity.getMotherName();
-        fatherName = entity.getFatherName();
-        wifeName = entity.getWifeName();
-        husbandName = entity.getHusbandName();
-        daughterName = entity.getDaughterName();
-        sonName = entity.getSonName();
-        this.author = new AuthorDTO(entity.getAuthor());
+        date = entity.getDate();        
+        this.medium = new MediumDTO(entity.getMedium());
+        this.status = entity.getStatus();
     }
 
     public Long getId() {
@@ -65,20 +56,12 @@ public class PsychographyDTO implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return this.firstName;
+    public String getFullName() {
+        return this.fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public LocalDate getDate() {
@@ -97,59 +80,23 @@ public class PsychographyDTO implements Serializable {
         this.text = text;
     }
 
-    public String getMotherName() {
-        return this.motherName;
+    public MediumDTO getMedium() {
+        return this.medium;
     }
 
-    public void setMotherName(String motherName) {
-        this.motherName = motherName;
+    public void setMedium(MediumDTO medium) {
+        this.medium = medium;
+    }  
+
+    public Boolean isStatus() {
+        return this.status;
     }
 
-    public String getFatherName() {
-        return this.fatherName;
+    public Boolean getStatus() {
+        return this.status;
     }
 
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
-
-    public String getWifeName() {
-        return this.wifeName;
-    }
-
-    public void setWifeName(String wifeName) {
-        this.wifeName = wifeName;
-    }
-
-    public String getHusbandName() {
-        return this.husbandName;
-    }
-
-    public void setHusbandName(String husbandName) {
-        this.husbandName = husbandName;
-    }
-
-    public String getDaughterName() {
-        return this.daughterName;
-    }
-
-    public void setDaughterName(String daughterName) {
-        this.daughterName = daughterName;
-    }
-
-    public String getSonName() {
-        return this.sonName;
-    }
-
-    public void setSonName(String sonName) {
-        this.sonName = sonName;
-    }
-
-    public AuthorDTO getAuthor() {
-        return this.author;
-    }
-
-    public void setAuthor(AuthorDTO author) {
-        this.author = author;
-    }   
 }

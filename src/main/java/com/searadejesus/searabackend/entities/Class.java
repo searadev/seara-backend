@@ -14,28 +14,24 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "message")
-public class Message implements Serializable {
+@Table(name = "class")
+public class Class implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(columnDefinition = "LONGTEXT")
-    private String text;
+    private String title;
+    private String uri;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
     private LocalDate date;
-
-    private String fullName;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
@@ -44,26 +40,30 @@ public class Message implements Serializable {
     private Instant updatedAt;
 
     @ManyToOne
+    @JoinColumn(name = "module_id")
+    private Module module;
+    
+    @ManyToOne
     @JoinColumn(name = "medium_id")
     private Medium medium;
-    
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    private Boolean status; 
-
-    public Message() {
+    public Class() {
     }
 
-    public Message(Long id, String text, LocalDate date, String fullName, Medium medium, User user, Boolean status) {
+    public Class(Long id, String title, String uri, LocalDate date, Instant createdAt, Instant updatedAt, Module module, Medium medium, User user) {
         this.id = id;
-        this.text = text;
+        this.title = title;
+        this.uri = uri;
         this.date = date;
-        this.fullName = fullName;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.module = module;
         this.medium = medium;
         this.user = user;
-        this.status = status;
     }
 
     public Long getId() {
@@ -74,12 +74,20 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public String getText() {
-        return this.text;
+    public String getTitle() {
+        return this.title;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUri() {
+        return this.uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public LocalDate getDate() {
@@ -89,30 +97,6 @@ public class Message implements Serializable {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
-    public String getFullName() {
-        return this.fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }    
-
-    public Medium getMedium() {
-        return this.medium;
-    }
-
-    public void setMedium(Medium medium) {
-        this.medium = medium;
-    }
-
-    public User getUser() {
-        return this.user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    } 
 
     public Instant getCreatedAt() {
         return this.createdAt;
@@ -130,17 +114,30 @@ public class Message implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public Boolean isStatus() {
-        return this.status;
+    public Module getModule() {
+        return this.module;
     }
 
-    public Boolean getStatus() {
-        return this.status;
+    public void setModule(Module module) {
+        this.module = module;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }          
+    public Medium getMedium() {
+        return this.medium;
+    }
+
+    public void setMedium(Medium medium) {
+        this.medium = medium;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+       
 
     @PrePersist
     public void prePersist() {
@@ -156,11 +153,11 @@ public class Message implements Serializable {
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof Message)) {
+        if (!(o instanceof Class)) {
             return false;
         }
-        Message message = (Message) o;
-        return Objects.equals(id, message.id);
+        Class Class = (Class) o;
+        return Objects.equals(id, Class.id);
     }
 
     @Override

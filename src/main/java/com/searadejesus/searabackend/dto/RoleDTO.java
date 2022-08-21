@@ -3,12 +3,16 @@ package com.searadejesus.searabackend.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.validation.constraints.NotBlank;
+
 import com.searadejesus.searabackend.entities.Role;
 
 public class RoleDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private Long id;
+
+    @NotBlank(message = "Campo obrigatório")
     private String authority;
 
     public RoleDTO() {

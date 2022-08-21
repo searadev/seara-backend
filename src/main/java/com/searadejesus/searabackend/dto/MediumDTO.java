@@ -2,25 +2,30 @@ package com.searadejesus.searabackend.dto;
 
 import java.io.Serializable;
 
-import com.searadejesus.searabackend.entities.Author;
+import javax.validation.constraints.NotBlank;
 
-public class AuthorDTO implements Serializable {
+import com.searadejesus.searabackend.entities.Medium;
+
+public class MediumDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    @NotBlank(message = "Campo obrigatório")
     private String firstName;
+    @NotBlank(message = "Campo obrigatório")
     private String lastName;
 
-    public AuthorDTO() {
+    public MediumDTO() {
     }
 
-    public AuthorDTO(Long id, String firstName, String lastName) {
+    public MediumDTO(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public AuthorDTO(Author entity) {
+    public MediumDTO(Medium entity) {
         id = entity.getId();
         firstName = entity.getFirstName();
         lastName = entity.getLastName();

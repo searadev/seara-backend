@@ -3,9 +3,9 @@ package com.searadejesus.searabackend.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.searadejesus.searabackend.entities.Author;
+import com.searadejesus.searabackend.entities.Module;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author, Long> {
+public interface ModuleRepository extends JpaRepository <Module, Long> {
     
 }

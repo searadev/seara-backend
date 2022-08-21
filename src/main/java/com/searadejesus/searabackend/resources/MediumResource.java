@@ -1,6 +1,8 @@
 package com.searadejesus.searabackend.resources;
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,32 +17,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.searadejesus.searabackend.dto.AuthorDTO;
-import com.searadejesus.searabackend.services.AuthorService;
+import com.searadejesus.searabackend.dto.MediumDTO;
+import com.searadejesus.searabackend.services.MediumService;
 
 
 @RestController
-@RequestMapping(value = "/authors")
-public class AuthorResource {
+@RequestMapping(value = "/mediuns")
+public class MediumResource {
 
     @Autowired
-    private AuthorService service;
+    private MediumService service;
 
     @GetMapping
-    public ResponseEntity<Page<AuthorDTO>> findAll(Pageable pageable) {
-        Page<AuthorDTO> list = service.findAllPaged(pageable);
+    public ResponseEntity<Page<MediumDTO>> findAll(Pageable pageable) {
+        Page<MediumDTO> list = service.findAllPaged(pageable);
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AuthorDTO> findById(@PathVariable Long id) {
-        AuthorDTO dto = service.findById(id);
+    public ResponseEntity<MediumDTO> findById(@PathVariable Long id) {
+        MediumDTO dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
     }
 
     @PostMapping
-    public ResponseEntity<AuthorDTO> insert(@RequestBody AuthorDTO dto) {
-        AuthorDTO newDto = service.insert(dto);
+    public ResponseEntity<MediumDTO> insert(@Valid @RequestBody MediumDTO dto) {
+        MediumDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDto.getId()).toUri();
         return ResponseEntity.created(uri).body(newDto);
@@ -48,7 +50,7 @@ public class AuthorResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<AuthorDTO> update(@PathVariable Long id, @RequestBody AuthorDTO dto){
+    public ResponseEntity<MediumDTO> update(@Valid @PathVariable Long id, @RequestBody MediumDTO dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }

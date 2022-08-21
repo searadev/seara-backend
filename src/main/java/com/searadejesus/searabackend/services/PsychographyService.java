@@ -19,10 +19,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.searadejesus.searabackend.dto.PsychographyDTO;
 import com.searadejesus.searabackend.dto.PsychographyInsertDTO;
-import com.searadejesus.searabackend.entities.Author;
+import com.searadejesus.searabackend.entities.Medium;
 import com.searadejesus.searabackend.entities.Psychography;
 import com.searadejesus.searabackend.entities.User;
-import com.searadejesus.searabackend.repositories.AuthorRepository;
+import com.searadejesus.searabackend.repositories.MediumRepository;
 import com.searadejesus.searabackend.repositories.PsychographyRepository;
 import com.searadejesus.searabackend.repositories.UserRepository;
 import com.searadejesus.searabackend.services.exceptions.DataBaseException;
@@ -37,7 +37,7 @@ public class PsychographyService {
     private PsychographyRepository repository;
 
     @Autowired
-    private AuthorRepository authorRepository;
+    private MediumRepository mediumRepository;
 
     @Autowired
     private UserRepository userRepository;    
@@ -95,20 +95,12 @@ public class PsychographyService {
     }
 
     private void copyDtoToEntity(PsychographyDTO dto, Psychography entity) {
-        
-        entity.setDaughterName(dto.getDaughterName());
-        entity.setFatherName(dto.getFatherName());
-        entity.setFirstName(dto.getFirstName());
-        entity.setHusbandName(dto.getHusbandName());
-        entity.setLastName(dto.getLastName());
+                
+        entity.setFullName(dto.getFullName()); 
+        entity.setText(dto.getText());       
         entity.setDate(dto.getDate());
-        entity.setMotherName(dto.getMotherName());
-        entity.setSonName(dto.getSonName());
-        entity.setText(dto.getText());
-        entity.setWifeName(dto.getWifeName());
-
-        Author author = authorRepository.getOne(dto.getAuthor().getId());
-        entity.setAuthor(author);       
-        
+        Medium medium = mediumRepository.getOne(dto.getMedium().getId());
+        entity.setMedium(medium);  
+        entity.setStatus(dto.getStatus());         
     }    
 }

@@ -12,25 +12,30 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.searadejesus.searabackend.dto.MessageDTO;
-import com.searadejesus.searabackend.dto.MessageInsertDTO;
-import com.searadejesus.searabackend.entities.Medium;
-import com.searadejesus.searabackend.entities.Message;
+import com.searadejesus.searabackend.dto.ClassDTO;
+import com.searadejesus.searabackend.dto.ClassInsertDTO;
+import com.searadejesus.searabackend.entities.Class;
 import com.searadejesus.searabackend.entities.User;
+import com.searadejesus.searabackend.repositories.ClassRepository;
 import com.searadejesus.searabackend.repositories.MediumRepository;
-import com.searadejesus.searabackend.repositories.MessageRepository;
+import com.searadejesus.searabackend.repositories.ModuleRepository;
 import com.searadejesus.searabackend.repositories.UserRepository;
 import com.searadejesus.searabackend.services.exceptions.DataBaseException;
 import com.searadejesus.searabackend.services.exceptions.ResourceNotFoundException;
+import com.searadejesus.searabackend.entities.Medium;
+import com.searadejesus.searabackend.entities.Module;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
-public class MessageService {
+public class ClassService {
 
     @Autowired
-    private MessageRepository repository;
+    private ClassRepository repository;
+
+    @Autowired
+    private ModuleRepository moduleRepository;
 
     @Autowired
     private MediumRepository mediumRepository;
@@ -39,39 +44,39 @@ public class MessageService {
     private UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public Page<MessageDTO> findAllPaged(Pageable pageable) {
-        Page<Message> list = repository.findAll(pageable);
-        return list.map(x -> new MessageDTO(x));
+    public Page<ClassDTO> findAllPaged(Pageable pageable) {
+        Page<Class> list = repository.findAll(pageable);
+        return list.map(x -> new ClassDTO(x));
     }
 
     @Transactional(readOnly = true)
-    public MessageDTO findById(Long id) {
-        Optional<Message> obj = repository.findById(id);
-        Message entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-        return new MessageDTO(entity);
+    public ClassDTO findById(Long id) {
+        Optional<Class> obj = repository.findById(id);
+        Class entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        return new ClassDTO(entity);
     }
 
     @Transactional
-    public MessageDTO insert(MessageInsertDTO dto) {
+    public ClassDTO insert(ClassInsertDTO dto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName(); 
         User user = userRepository.findByEmail(login);
 
-        Message entity = new Message();
+        Class entity = new Class();
         copyDtoToEntity(dto, entity);
         entity.setUser(user);
         entity = repository.save(entity);
-        return new MessageDTO(entity);
+        return new ClassDTO(entity);
     }    
 
     @Transactional
-    public MessageDTO update(Long id, MessageDTO dto) {
+    public ClassDTO update(Long id, ClassDTO dto) {
         try {
-            Message entity = repository.getOne(id);
+            Class entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
                 entity = repository.save(entity);
-                return new MessageDTO(entity);
+                return new ClassDTO(entity);
         } 
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found" + id);
@@ -90,13 +95,18 @@ public class MessageService {
         }
     }
 
-    private void copyDtoToEntity(MessageDTO dto, Message entity) {
-
-        entity.setFullName(dto.getFullName());
-        entity.setText(dto.getText());  
+    private void copyDtoToEntity(ClassDTO dto, Class entity) {
+        
         entity.setDate(dto.getDate());
+        entity.setTitle(dto.getTitle());
+        entity.setUri(dto.getUri());  
+        
+        Module module = moduleRepository.getOne(dto.getMedium().getId());
+        entity.setModule(module);
+
         Medium medium = mediumRepository.getOne(dto.getMedium().getId());
-        entity.setMedium(medium);
-        entity.setStatus(dto.getStatus());
-    }    
+        entity.setMedium(medium);   
+        
+    }
+    
 }

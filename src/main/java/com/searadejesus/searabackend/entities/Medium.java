@@ -9,22 +9,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name = "role")
-public class Role implements Serializable {
+@Table(name = "medium")
+public class Medium implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String authority;
+    private String firstName;
+    private String lastName;    
 
-    public Role() {
+    public Medium() {
     }
 
-    public Role(Long id, String authority) {
+    public Medium(Long id, String firstName, String lastName) {
         this.id = id;
-        this.authority = authority;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -35,28 +38,35 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getAuthority() {
-        return this.authority;
+    public String getFirstName() {
+        return this.firstName;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }       
 
     @Override
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof Role)) {
+        if (!(o instanceof Medium)) {
             return false;
         }
-        Role role = (Role) o;
-        return Objects.equals(id, role.id);
+        Medium author = (Medium) o;
+        return Objects.equals(id, author.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }    
-    
 }

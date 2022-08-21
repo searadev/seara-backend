@@ -3,11 +3,9 @@ package com.searadejesus.searabackend.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.searadejesus.searabackend.entities.Psychography;
+import com.searadejesus.searabackend.entities.Medium;
 
 @Repository
-public interface PsychographyRepository extends JpaRepository <Psychography, Long> {
-
-    
+public interface MediumRepository extends JpaRepository<Medium, Long> {
     
 }

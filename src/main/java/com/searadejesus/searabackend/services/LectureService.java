@@ -12,25 +12,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.searadejesus.searabackend.dto.MessageDTO;
-import com.searadejesus.searabackend.dto.MessageInsertDTO;
-import com.searadejesus.searabackend.entities.Medium;
-import com.searadejesus.searabackend.entities.Message;
+import com.searadejesus.searabackend.dto.LectureDTO;
+import com.searadejesus.searabackend.dto.LectureInsertDTO;
+import com.searadejesus.searabackend.entities.Lecture;
 import com.searadejesus.searabackend.entities.User;
+import com.searadejesus.searabackend.repositories.LectureRepository;
 import com.searadejesus.searabackend.repositories.MediumRepository;
-import com.searadejesus.searabackend.repositories.MessageRepository;
 import com.searadejesus.searabackend.repositories.UserRepository;
 import com.searadejesus.searabackend.services.exceptions.DataBaseException;
 import com.searadejesus.searabackend.services.exceptions.ResourceNotFoundException;
+import com.searadejesus.searabackend.entities.Medium;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
-public class MessageService {
+public class LectureService {
 
     @Autowired
-    private MessageRepository repository;
+    private LectureRepository repository;
 
     @Autowired
     private MediumRepository mediumRepository;
@@ -39,39 +39,39 @@ public class MessageService {
     private UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public Page<MessageDTO> findAllPaged(Pageable pageable) {
-        Page<Message> list = repository.findAll(pageable);
-        return list.map(x -> new MessageDTO(x));
+    public Page<LectureDTO> findAllPaged(Pageable pageable) {
+        Page<Lecture> list = repository.findAll(pageable);
+        return list.map(x -> new LectureDTO(x));
     }
 
     @Transactional(readOnly = true)
-    public MessageDTO findById(Long id) {
-        Optional<Message> obj = repository.findById(id);
-        Message entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-        return new MessageDTO(entity);
+    public LectureDTO findById(Long id) {
+        Optional<Lecture> obj = repository.findById(id);
+        Lecture entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        return new LectureDTO(entity);
     }
 
     @Transactional
-    public MessageDTO insert(MessageInsertDTO dto) {
+    public LectureDTO insert(LectureInsertDTO dto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName(); 
         User user = userRepository.findByEmail(login);
 
-        Message entity = new Message();
+        Lecture entity = new Lecture();
         copyDtoToEntity(dto, entity);
         entity.setUser(user);
         entity = repository.save(entity);
-        return new MessageDTO(entity);
+        return new LectureDTO(entity);
     }    
 
     @Transactional
-    public MessageDTO update(Long id, MessageDTO dto) {
+    public LectureDTO update(Long id, LectureDTO dto) {
         try {
-            Message entity = repository.getOne(id);
+            Lecture entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
                 entity = repository.save(entity);
-                return new MessageDTO(entity);
+                return new LectureDTO(entity);
         } 
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found" + id);
@@ -90,13 +90,15 @@ public class MessageService {
         }
     }
 
-    private void copyDtoToEntity(MessageDTO dto, Message entity) {
+    private void copyDtoToEntity(LectureDTO dto, Lecture entity) {      
 
-        entity.setFullName(dto.getFullName());
-        entity.setText(dto.getText());  
         entity.setDate(dto.getDate());
+        entity.setTitle(dto.getTitle());
+        entity.setUri(dto.getUri());
+        
         Medium medium = mediumRepository.getOne(dto.getMedium().getId());
         entity.setMedium(medium);
-        entity.setStatus(dto.getStatus());
-    }    
+        
+    }
+    
 }

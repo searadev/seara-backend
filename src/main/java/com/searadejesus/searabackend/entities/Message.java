@@ -28,14 +28,13 @@ public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String fullName;
 
     @Column(columnDefinition = "LONGTEXT")
     private String text;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
-    private LocalDate date;
-
-    private String fullName;
+    private LocalDate date;    
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
@@ -56,11 +55,11 @@ public class Message implements Serializable {
     public Message() {
     }
 
-    public Message(Long id, String text, LocalDate date, String fullName, Medium medium, User user, Boolean status) {
+    public Message(Long id, String fullName, String text, LocalDate date, Medium medium, User user, Boolean status) {
         this.id = id;
-        this.text = text;
-        this.date = date;
         this.fullName = fullName;
+        this.text = text;
+        this.date = date;        
         this.medium = medium;
         this.user = user;
         this.status = status;

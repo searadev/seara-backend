@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.searadejesus.searabackend.dto.PsychographyDTO;
 import com.searadejesus.searabackend.dto.PsychographyInsertDTO;
+import com.searadejesus.searabackend.dto.PsychographyPagedDTO;
 import com.searadejesus.searabackend.services.PsychographyService;
 
 @RestController
@@ -30,12 +31,12 @@ public class PsychographyResource {
     private PsychographyService service;
 
     @GetMapping
-    public ResponseEntity<Page<PsychographyDTO>> findAll(
+    public ResponseEntity<Page<PsychographyPagedDTO>> findAll(
         Pageable pageable,
         @RequestParam(value = "fullname", defaultValue = "") String fullName,
         @RequestParam(value = "text", defaultValue = "") String text
         ) {
-        Page<PsychographyDTO> list = service.findAllPaged(pageable, fullName.trim(), text);
+        Page<PsychographyPagedDTO> list = service.findAllPaged(pageable, fullName.trim(), text);
         return ResponseEntity.ok().body(list);
     }
 

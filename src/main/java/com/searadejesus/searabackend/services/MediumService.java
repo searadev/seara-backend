@@ -73,7 +73,6 @@ public class MediumService {
 
     private void copyDtoToEntity(MediumDTO dto, Medium entity) {
 
-        entity.setFirstName(dto.getFirstName());
-        entity.setLastName(dto.getLastName());
+        entity.setFullName(dto.getFullName());
     }
 }

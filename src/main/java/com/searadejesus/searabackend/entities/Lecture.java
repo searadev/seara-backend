@@ -20,7 +20,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "lecture")
+@Table(name = "tb_lecture")
 public class Lecture implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -28,7 +28,7 @@ public class Lecture implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String uri;
+    private String url;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
     //@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -51,10 +51,10 @@ public class Lecture implements Serializable {
     public Lecture() {
     }
 
-    public Lecture(Long id, String title, String uri, LocalDate date, Instant createdAt, Instant updatedAt, Medium medium, User user) {
+    public Lecture(Long id, String title, String url, LocalDate date, Instant createdAt, Instant updatedAt, Medium medium, User user) {
         this.id = id;
         this.title = title;
-        this.uri = uri;
+        this.url = url;
         this.date = date;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -78,12 +78,12 @@ public class Lecture implements Serializable {
         this.title = title;
     }
 
-    public String getUri() {
-        return this.uri;
+    public String getUrl() {
+        return this.url;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public LocalDate getDate() {

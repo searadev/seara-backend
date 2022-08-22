@@ -94,7 +94,7 @@ public class LectureService {
 
         entity.setDate(dto.getDate());
         entity.setTitle(dto.getTitle());
-        entity.setUri(dto.getUri());
+        entity.setUrl(dto.getUrl());
         
         Medium medium = mediumRepository.getOne(dto.getMedium().getId());
         entity.setMedium(medium);

@@ -99,7 +99,7 @@ public class ClassService {
         
         entity.setDate(dto.getDate());
         entity.setTitle(dto.getTitle());
-        entity.setUri(dto.getUri());  
+        entity.setUrl(dto.getUrl());  
         
         Module module = moduleRepository.getOne(dto.getMedium().getId());
         entity.setModule(module);

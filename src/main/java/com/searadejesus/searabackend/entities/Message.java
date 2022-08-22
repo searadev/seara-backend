@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.Instant;
 
 @Entity
-@Table(name = "message")
+@Table(name = "tb_message")
 public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -84,4 +84,4 @@ jobs:
           DB_URL: ${{ secrets.DB_URL }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} -a ${{ secrets.DB_URL } -a ${{ secrets.DB_USERNAME }} -a ${{ secrets.DB_PASSWORD }} web 
+        run: heroku container:release -a ${{ secrets.DB_URL } -a ${{ secrets.DB_USERNAME }} -a ${{ secrets.DB_PASSWORD }} -a ${{ secrets.HEROKU_APP_NAME }} web 

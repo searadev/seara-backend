@@ -17,7 +17,7 @@ public class LectureDTO implements Serializable {
     @NotBlank(message = "Campo obrigatório")
     private String title;
     @NotBlank(message = "Campo obrigatório")
-    private String uri;
+    private String url;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
     @PastOrPresent(message = "A data não pode ser futura")
@@ -28,10 +28,10 @@ public class LectureDTO implements Serializable {
     public LectureDTO() {
     }
 
-    public LectureDTO(Long id, String title, String uri, LocalDate date, MediumDTO medium) {
+    public LectureDTO(Long id, String title, String url, LocalDate date, MediumDTO medium) {
         this.id = id;
         this.title = title;
-        this.uri = uri;
+        this.url = url;
         this.date = date;
         this.medium = medium;
     }    
@@ -39,7 +39,7 @@ public class LectureDTO implements Serializable {
     public LectureDTO(Lecture entity){
         id = entity.getId();
         title = entity.getTitle();
-        uri = entity.getUri();
+        url = entity.getUrl();
         date = entity.getDate();
         this.medium = new MediumDTO(entity.getMedium());
     }
@@ -60,12 +60,12 @@ public class LectureDTO implements Serializable {
         this.title = title;
     }
 
-    public String getUri() {
-        return this.uri;
+    public String getUrl() {
+        return this.url;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public LocalDate getDate() {

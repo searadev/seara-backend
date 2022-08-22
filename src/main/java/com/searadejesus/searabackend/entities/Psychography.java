@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "psychography")
+@Table(name = "tb_psychography")
 public class Psychography implements Serializable {
     private static final long serialVersionUID = 1L;
 

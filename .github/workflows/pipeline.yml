@@ -59,6 +59,9 @@ jobs:
       - name: Docker Build Image & Push Heroku Registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          ENV_DB_URL: ${{ secrets.DB_URL }}
+          ENV_DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          ENV_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web
 
 #      - name: Google Cloud Plataform Login
@@ -80,8 +83,5 @@ jobs:
     steps:
       - name: Deploy Heroku
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-          DB_URL: ${{ secrets.DB_URL }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}          
         run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web 

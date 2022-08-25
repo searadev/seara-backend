@@ -57,7 +57,7 @@ jobs:
         run: heroku container:login
 
       - name: Heroku Env
-        run: heroku config:set DB_URL=jdbc:postgresql://ec2-44-207-126-176.compute-1.amazonaws.com:5432/d7ifn7asd1qqt1 DB_USERNAME=ubqwqdvtwfryzw DB_PASSWORD=27aaab37f2c3ca5ffe6337b4d8118045d8babb3177c46d8b37eb7e671d73afbd -a ${{ secrets.HEROKU_APP_NAME }}
+        run: heroku config:set DB_URL=${{ secrets.DB_URL }} DB_USERNAME=${{ secrets.DB_USERNAME }} DB_PASSWORD=${{ secrets.DB_PASSWORD }} -a ${{ secrets.HEROKU_APP_NAME }}
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           DB_URL: ${{ secrets.DB_URL }}

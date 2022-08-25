@@ -57,7 +57,7 @@ jobs:
         run: heroku container:login
 
       - name: Heroku Env
-        run: heroku config:set -a DB_URL=${{ secrets.DB_URL }} -a DB_USERNAME=${{ secrets.DB_USERNAME }} -a DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+        run: heroku config:set DB_URL=${{ secrets.DB_URL }} DB_USERNAME=${{ secrets.DB_USERNAME }} DB_PASSWORD=${{ secrets.DB_PASSWORD }}
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           DB_URL: ${{ secrets.DB_URL }}

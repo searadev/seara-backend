@@ -29,6 +29,7 @@ public class Message implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fullName;
+    private String title;
 
     @Column(columnDefinition = "LONGTEXT")
     private String text;
@@ -55,8 +56,9 @@ public class Message implements Serializable {
     public Message() {
     }
 
-    public Message(Long id, String fullName, String text, LocalDate date, Medium medium, User user, Boolean status) {
+    public Message(Long id, String title, String fullName, String text, LocalDate date, Medium medium, User user, Boolean status) {
         this.id = id;
+        this.title = title;
         this.fullName = fullName;
         this.text = text;
         this.date = date;        
@@ -72,6 +74,14 @@ public class Message implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }    
 
     public String getText() {
         return this.text;

@@ -26,7 +26,8 @@ public class Psychography implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String fullName;    
+    private String fullName;
+    private String title;    
     
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
     //@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -54,9 +55,10 @@ public class Psychography implements Serializable {
     public Psychography() {
     }
 
-    public Psychography(Long id, String fullName, LocalDate date, String text, Medium medium, User user, Boolean status) {
+    public Psychography(Long id, String fullName, String title, LocalDate date, String text, Medium medium, User user, Boolean status) {
         this.id = id;
         this.fullName = fullName;
+        this.title = title;
         this.date = date;
         this.text = text;
         this.medium = medium;
@@ -79,6 +81,15 @@ public class Psychography implements Serializable {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
 
     public LocalDate getDate() {
         return this.date;

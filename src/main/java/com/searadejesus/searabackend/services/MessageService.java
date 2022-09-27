@@ -94,6 +94,7 @@ public class MessageService {
     private void copyDtoToEntity(MessageDTO dto, Message entity) {
 
         entity.setFullName(dto.getFullName());
+        entity.setTitle(dto.getTitle());
         entity.setText(dto.getText());  
         entity.setDate(dto.getDate());
         Medium medium = mediumRepository.getOne(dto.getMedium().getId());

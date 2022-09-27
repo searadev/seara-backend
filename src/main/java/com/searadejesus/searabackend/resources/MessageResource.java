@@ -20,7 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.searadejesus.searabackend.dto.MessageDTO;
 import com.searadejesus.searabackend.dto.MessageInsertDTO;
-import com.searadejesus.searabackend.dto.MessagePagedDTO;
 import com.searadejesus.searabackend.services.MessageService;
 
 @RestController
@@ -31,12 +30,12 @@ public class MessageResource {
     private MessageService service;
 
     @GetMapping
-    public ResponseEntity<Page<MessagePagedDTO>> findAll(
+    public ResponseEntity<Page<MessageDTO>> findAll(
         Pageable pageable,
         @RequestParam(value = "fullname", defaultValue = "") String fullName,
         @RequestParam(value = "text", defaultValue = "") String text
         ) {
-        Page<MessagePagedDTO> list = service.findAllPaged(pageable, fullName, text);
+        Page<MessageDTO> list = service.findAllPaged(pageable, fullName, text);
         return ResponseEntity.ok().body(list);
     }
 

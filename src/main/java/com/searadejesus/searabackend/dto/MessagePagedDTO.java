@@ -16,6 +16,8 @@ public class MessagePagedDTO implements Serializable {
     private Long id;
     @NotBlank(message = "Campo obrigatório")
     private String fullName;
+    @NotBlank(message = "Campo obrigatório")
+    private String title;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern="dd/MM/yyyy")
     @PastOrPresent(message = "A data não pode estar no futuro")
@@ -28,9 +30,10 @@ public class MessagePagedDTO implements Serializable {
     public MessagePagedDTO() {
     }
 
-    public MessagePagedDTO(Long id, String fullName, LocalDate date, MediumDTO medium, Boolean status) {
+    public MessagePagedDTO(Long id, String fullName, String title, LocalDate date, MediumDTO medium, Boolean status) {
         this.id = id;
         this.fullName = fullName;
+        this.title = title;
         this.date = date;
         this.medium = medium;
         this.status = status;
@@ -39,6 +42,7 @@ public class MessagePagedDTO implements Serializable {
     public MessagePagedDTO(Message entity){
         id = entity.getId();
         fullName = entity.getFullName();
+        title = entity.getTitle();
         date = entity.getDate();        
         this.medium = new MediumDTO(entity.getMedium());
         this.status = entity.getStatus();
@@ -58,6 +62,14 @@ public class MessagePagedDTO implements Serializable {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+    
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public LocalDate getDate() {

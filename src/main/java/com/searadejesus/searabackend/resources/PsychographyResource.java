@@ -24,7 +24,7 @@ import com.searadejesus.searabackend.dto.PsychographyPagedDTO;
 import com.searadejesus.searabackend.services.PsychographyService;
 
 @RestController
-@RequestMapping(value = "/psychographys")
+@RequestMapping(value = "/psychographies")
 public class PsychographyResource {
     
     @Autowired

@@ -14,7 +14,12 @@ public interface PsychographyRepository extends JpaRepository <Psychography, Lon
     @Query("SELECT DISTINCT obj FROM Psychography obj WHERE "
             + "(LOWER(obj.fullName) LIKE LOWER(CONCAT('%',:fullName,'%')) ) AND "
             + "(LOWER(obj.text) LIKE LOWER(CONCAT('%',:text,'%')) ) AND "
-            + "(obj.status = true)") 
+            + "(obj.status = 'true')") 
     Page<Psychography> find(Pageable pageable, String fullName, String text);
+
+    @Query("SELECT DISTINCT obj FROM Psychography obj WHERE "
+            + "(LOWER(obj.fullName) LIKE LOWER(CONCAT('%',:fullName,'%')) ) AND "
+            + "(LOWER(obj.text) LIKE LOWER(CONCAT('%',:text,'%')) ) ")
+    Page<Psychography> findAllStatus(Pageable pageable, String fullName, String text);
     
 }

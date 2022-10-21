@@ -40,6 +40,16 @@ public class PsychographyResource {
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping(value = "/all")
+    public ResponseEntity<Page<PsychographyPagedDTO>> findAllStatus(
+        Pageable pageable,
+        @RequestParam(value = "fullname", defaultValue = "") String fullName,
+        @RequestParam(value = "text", defaultValue = "") String text
+        ) {
+        Page<PsychographyPagedDTO> list = service.findAllStatus(pageable, fullName.trim(), text);
+        return ResponseEntity.ok().body(list);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<PsychographyDTO> findById(@PathVariable Long id) {
         PsychographyDTO dto = service.findById(id);

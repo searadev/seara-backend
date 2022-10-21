@@ -46,6 +46,12 @@ public class MessageService {
     }
 
     @Transactional(readOnly = true)
+    public Page<MessageDTO> findAllStatus(Pageable pageable, String fullName, String text) {
+        Page<Message> list = repository.findAllStatus(pageable, fullName, text);
+        return list.map(x -> new MessageDTO(x));
+    }
+
+    @Transactional(readOnly = true)
     public MessageDTO findById(Long id) {
         Optional<Message> obj = repository.findById(id);
         Message entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));

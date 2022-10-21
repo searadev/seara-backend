@@ -39,6 +39,16 @@ public class MessageResource {
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping(value = "/all")
+    public ResponseEntity<Page<MessageDTO>> findAllStatus(
+        Pageable pageable,
+        @RequestParam(value = "fullname", defaultValue = "") String fullName,
+        @RequestParam(value = "text", defaultValue = "") String text
+        ) {
+        Page<MessageDTO> list = service.findAllStatus(pageable, fullName, text);
+        return ResponseEntity.ok().body(list);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<MessageDTO> findById(@PathVariable Long id) {
         MessageDTO dto = service.findById(id);

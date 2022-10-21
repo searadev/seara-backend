@@ -16,5 +16,10 @@ public interface MessageRepository extends JpaRepository <Message, Long> {
             + "(LOWER(obj.text) LIKE LOWER(CONCAT('%',:text,'%')) ) AND "
             + "(obj.status = true)") 
     Page<Message> find(Pageable pageable, String fullName, String text);
+
+    @Query("SELECT DISTINCT obj FROM Message obj WHERE "
+            + "(LOWER(obj.fullName) LIKE LOWER(CONCAT('%',:fullName,'%')) ) AND "
+            + "(LOWER(obj.text) LIKE LOWER(CONCAT('%',:text,'%')) )  ")
+    Page<Message> findAllStatus(Pageable pageable, String fullName, String text);
     
 }

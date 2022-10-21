@@ -50,6 +50,12 @@ public class PsychographyService {
     }
 
     @Transactional(readOnly = true)
+    public Page<PsychographyPagedDTO> findAllStatus(Pageable pageable, String fullName, String text) {
+        Page<Psychography> list = repository.findAllStatus(pageable, fullName, text);
+        return list.map(x -> new PsychographyPagedDTO(x));
+    }
+
+    @Transactional(readOnly = true)
     public PsychographyDTO findById(Long id) {
         Optional<Psychography> obj = repository.findById(id);
         Psychography entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));

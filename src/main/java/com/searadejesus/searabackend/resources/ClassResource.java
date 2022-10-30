@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,8 +30,12 @@ public class ClassResource {
     private ClassService service;
 
     @GetMapping
-    public ResponseEntity<Page<ClassDTO>> findAll(Pageable pageable) {
-        Page<ClassDTO> list = service.findAllPaged(pageable);
+    public ResponseEntity<Page<ClassDTO>> findAll(
+        Pageable pageable,
+        @RequestParam(value = "title", defaultValue = "") String title,
+        @RequestParam(value = "moduleId", defaultValue = "0") Long moduleId
+        ) {
+        Page<ClassDTO> list = service.findAllPaged(pageable, title.trim(), moduleId); 
         return ResponseEntity.ok().body(list);
     }
 

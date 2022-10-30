@@ -44,9 +44,10 @@ public class ClassService {
     private UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public Page<ClassDTO> findAllPaged(Pageable pageable) {
-        Page<Class> list = repository.findAll(pageable);
-        return list.map(x -> new ClassDTO(x));
+    public Page<ClassDTO> findAllPaged(Pageable pageable, String title, Long moduleId) {
+        Module module = (moduleId == 0) ? null : moduleRepository.getOne(moduleId);
+        Page<Class> list = repository.findPageable(title, module, pageable);
+        return list.map(x -> new ClassDTO(x)); 
     }
 
     @Transactional(readOnly = true)

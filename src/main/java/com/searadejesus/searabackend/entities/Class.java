@@ -41,7 +41,7 @@ public class Class implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "module_id")
-    private Module module;
+    private Module module; 
     
     @ManyToOne
     @JoinColumn(name = "medium_id")

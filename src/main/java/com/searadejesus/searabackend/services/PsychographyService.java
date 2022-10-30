@@ -46,7 +46,7 @@ public class PsychographyService {
     @Transactional(readOnly = true)
     public Page<PsychographyPagedDTO> findAllPaged(Pageable pageable, String fullName, String text) {
         Page<Psychography> list = repository.find(pageable, fullName, text);
-        return list.map(x -> new PsychographyPagedDTO(x));
+        return list.map(x -> new PsychographyPagedDTO(x)); 
     }
 
     @Transactional(readOnly = true)

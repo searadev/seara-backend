@@ -33,9 +33,9 @@ public class MessageResource {
     public ResponseEntity<Page<MessageDTO>> findAll(
         Pageable pageable,
         @RequestParam(value = "fullname", defaultValue = "") String fullName,
-        @RequestParam(value = "text", defaultValue = "") String text
+        @RequestParam(value = "title", defaultValue = "") String title
         ) {
-        Page<MessageDTO> list = service.findAllPaged(pageable, fullName, text);
+        Page<MessageDTO> list = service.findAllPaged(pageable, fullName, title);
         return ResponseEntity.ok().body(list);
     }
 
@@ -43,9 +43,9 @@ public class MessageResource {
     public ResponseEntity<Page<MessageDTO>> findAllStatus(
         Pageable pageable,
         @RequestParam(value = "fullname", defaultValue = "") String fullName,
-        @RequestParam(value = "text", defaultValue = "") String text
+        @RequestParam(value = "title", defaultValue = "") String title
         ) {
-        Page<MessageDTO> list = service.findAllStatus(pageable, fullName, text);
+        Page<MessageDTO> list = service.findAllStatus(pageable, fullName, title);
         return ResponseEntity.ok().body(list);
     }
 

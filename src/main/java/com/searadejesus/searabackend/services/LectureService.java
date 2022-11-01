@@ -39,8 +39,8 @@ public class LectureService {
     private UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public Page<LectureDTO> findAllPaged(Pageable pageable) {
-        Page<Lecture> list = repository.findAll(pageable);
+    public Page<LectureDTO> findAllPaged(Pageable pageable, String title) {
+        Page<Lecture> list = repository.findPageable(title, pageable);
         return list.map(x -> new LectureDTO(x));
     }
 

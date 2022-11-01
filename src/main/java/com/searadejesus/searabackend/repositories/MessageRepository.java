@@ -13,13 +13,13 @@ public interface MessageRepository extends JpaRepository <Message, Long> {
 
     @Query("SELECT DISTINCT obj FROM Message obj WHERE "
             + "(LOWER(obj.fullName) LIKE LOWER(CONCAT('%',:fullName,'%')) ) AND "
-            + "(LOWER(obj.text) LIKE LOWER(CONCAT('%',:text,'%')) ) AND "
+            + "(LOWER(obj.title) LIKE LOWER(CONCAT('%',:title,'%')) ) AND "
             + "(obj.status = true)") 
-    Page<Message> find(Pageable pageable, String fullName, String text);
+    Page<Message> find(Pageable pageable, String fullName, String title);
 
     @Query("SELECT DISTINCT obj FROM Message obj WHERE "
             + "(LOWER(obj.fullName) LIKE LOWER(CONCAT('%',:fullName,'%')) ) AND "
-            + "(LOWER(obj.text) LIKE LOWER(CONCAT('%',:text,'%')) )  ")
-    Page<Message> findAllStatus(Pageable pageable, String fullName, String text);
+            + "(LOWER(obj.title) LIKE LOWER(CONCAT('%',:title,'%')) )  ")
+    Page<Message> findAllStatus(Pageable pageable, String fullName, String title);
     
 }

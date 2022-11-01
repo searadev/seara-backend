@@ -40,14 +40,14 @@ public class MessageService {
     private UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public Page<MessageDTO> findAllPaged(Pageable pageable, String fullName, String text) {
-        Page<Message> list = repository.find(pageable, fullName, text);
+    public Page<MessageDTO> findAllPaged(Pageable pageable, String fullName, String title) {
+        Page<Message> list = repository.find(pageable, fullName, title);
         return list.map(x -> new MessageDTO(x));
     }
 
     @Transactional(readOnly = true)
-    public Page<MessageDTO> findAllStatus(Pageable pageable, String fullName, String text) {
-        Page<Message> list = repository.findAllStatus(pageable, fullName, text);
+    public Page<MessageDTO> findAllStatus(Pageable pageable, String fullName, String title) {
+        Page<Message> list = repository.findAllStatus(pageable, fullName, title);
         return list.map(x -> new MessageDTO(x));
     }
 

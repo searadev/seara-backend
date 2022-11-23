@@ -44,13 +44,19 @@ jobs:
 
       - name: multiple command
         uses: appleboy/ssh-action@master
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}   
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
+          envs: DB_URL,DB_USERNAME,DB_PASSWORD,DOCKER_USER
           script: |            
             docker stop searadev-aws
-            docker run -p 8080:8080 --name searadev-aws -e APP_PROFILE=prod -e DB_URL=${{ secrets.DB_URL }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} ${{ secrets.DOCKER_USER }}/searadev:latest
+            docker run -p 8080:8080 --name searadev-aws -e APP_PROFILE=prod -e DB_URL=$DB_URL -e DB_USERNAME=$DB_USERNAME -e DB_PASSWORD=$DB_PASSWORD $DOCKER_USER/searadev:latest
               
   

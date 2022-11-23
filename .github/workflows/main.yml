@@ -36,26 +36,28 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/searadev
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: ubuntu-latest
 
-      - name: Docker Push
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/searadev
+    steps:
 
-      - name: Deploy EC2 from Docker Hub
-        uses: appleboy/ssh-action@master
-        env:
-          DB_URL: ${{ secrets.DB_URL }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}   
-
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: 8080
-          script: |            
-            docker stop searadev-aws
-            docker run -p 8080:8080 --name searadev-aws -e APP_PROFILE=prod -e DB_URL=${{ secrets.DB_URL }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} ${{ secrets.DOCKER_USER }}/searadev:latest
-              
-  
+    - name: executing remote ssh commands using key
+      uses: appleboy/ssh-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        DB_URL: ${{ secrets.DB_URL }}
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.key }}
+        port: ${{ secrets.PORT }}
+        envs: DB_URL,DB_USERNAME,DB_PASSWORD
+        script: |
+          docker pull searadejesus/searadev:latest
+          docker kill searadev-aws
+          docker rm searadev-aws
+          docker run -d -p 8080:8080 --name searadev-aws -e APP_PROFILE=prod DB_URL="$DB_URL" -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" searadejesus/searadev:latest

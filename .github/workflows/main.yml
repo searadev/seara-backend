@@ -38,7 +38,7 @@ jobs:
 
   deploy:
     needs: build
-    name: Deploy
+    name: Deploy to EC2
     runs-on: ubuntu-latest
 
     steps:

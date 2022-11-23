@@ -53,7 +53,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          port: "8080"
+          port: 8080
           script: |            
             docker stop searadev-aws
             docker run -p 8080:8080 --name searadev-aws -e APP_PROFILE=prod -e DB_URL=${{ secrets.DB_URL }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} ${{ secrets.DOCKER_USER }}/searadev:latest

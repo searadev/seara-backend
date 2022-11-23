@@ -55,8 +55,8 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           envs: DB_URL,DB_USERNAME,DB_PASSWORD,DOCKER_USER
-          script: |            
-            docker stop searadev-aws
-            docker run -p 8080:8080 --name searadev-aws -e APP_PROFILE=prod -e DB_URL=$DB_URL -e DB_USERNAME=$DB_USERNAME -e DB_PASSWORD=$DB_PASSWORD $DOCKER_USER/searadev:latest
+          script: |
+            whoami
+            ls -al
               
   

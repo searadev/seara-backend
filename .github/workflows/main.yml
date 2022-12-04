@@ -58,11 +58,8 @@ jobs:
         USER_NAME : ${{ secrets.USER_NAME  }}
       
       run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+        ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
           
-          sudo docker pull searadejesus/searadev:latest
-          sudo docker kill searadev-aws
-          sudo docker rm searadev-aws
-          sudo docker run -d -p 8080:8080 --name searadev-aws -e APP_PROFILE=prod DB_URL="$DB_URL" -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" searadejesus/searadev:latest
+          
        

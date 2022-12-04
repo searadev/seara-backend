@@ -36,28 +36,33 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/searadev
+
+      - name: Docker Push
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/searadev
+
   deploy:
     needs: build
-    name: Deploy to EC2
     runs-on: ubuntu-latest
 
     steps:
-
-    - name: executing remote ssh commands using key
-      uses: appleboy/ssh-action@master
+    - uses: actions/checkout@v2 
+    - name: Deploy in EC2
       env:
-        HOST: ${{ secrets.HOST }}
         DB_URL: ${{ secrets.DB_URL }}
         DB_USERNAME: ${{ secrets.DB_USERNAME }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.key }}
-        port: ${{ secrets.PORT }}
-        envs: DB_URL,DB_USERNAME,DB_PASSWORD
-        script: |
-          docker pull searadejesus/searadev:latest
-          docker kill searadev-aws
-          docker rm searadev-aws
-          docker run -d -p 8080:8080 --name searadev-aws -e APP_PROFILE=prod DB_URL="$DB_URL" -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" searadejesus/searadev:latest
+        PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
+        HOSTNAME : ${{ secrets.HOSTNAME  }}
+        USER_NAME : ${{ secrets.USER_NAME  }}
+      
+      run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          
+          sudo docker pull searadejesus/searadev:latest
+          sudo docker kill searadev-aws
+          sudo docker rm searadev-aws
+          sudo docker run -d -p 8080:8080 --name searadev-aws -e APP_PROFILE=prod DB_URL="$DB_URL" -e DB_USERNAME="$DB_USERNAME" -e DB_PASSWORD="$DB_PASSWORD" searadejesus/searadev:latest
+       

@@ -14,7 +14,8 @@ public interface ClassRepository extends JpaRepository <Class, Long> {
 
     @Query("SELECT DISTINCT obj FROM Class obj WHERE " 
             + "(LOWER(obj.title) LIKE LOWER(CONCAT('%',:title,'%')) ) AND"
-            + "(:module IS NULL OR :module = obj.module)")
+            + "(:module IS NULL OR :module = obj.module)"
+            + "ORDER BY obj.date DESC" )
     Page<Class> findPageable(String title, Module module, Pageable pageable);
     
 }

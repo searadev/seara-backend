@@ -12,7 +12,8 @@ import com.searadejesus.searabackend.entities.Lecture;
 public interface LectureRepository extends JpaRepository <Lecture, Long> {
 
     @Query("SELECT DISTINCT obj FROM Lecture obj WHERE " 
-            + "(LOWER(obj.title) LIKE LOWER(CONCAT('%',:title,'%')) ) ")
+            + "(LOWER(obj.title) LIKE LOWER(CONCAT('%',:title,'%')) ) "
+            + "ORDER BY obj.date DESC" )
     Page<Lecture> findPageable(String title, Pageable pageable);
     
 }

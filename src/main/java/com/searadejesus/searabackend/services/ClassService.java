@@ -102,7 +102,7 @@ public class ClassService {
         entity.setTitle(dto.getTitle());
         entity.setUrl(dto.getUrl());  
         
-        Module module = moduleRepository.getOne(dto.getMedium().getId());
+        Module module = moduleRepository.getOne(dto.getModule().getId());
         entity.setModule(module);
 
         Medium medium = mediumRepository.getOne(dto.getMedium().getId());

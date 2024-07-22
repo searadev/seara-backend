@@ -1,4 +1,4 @@
-package com.searadejesus.searabackend.resources;
+package com.searadejesus.searabackend.controllers;
 import java.net.URI;
 
 import javax.validation.Valid;
@@ -23,7 +23,7 @@ import com.searadejesus.searabackend.services.UserService;
 
 @RestController
 @RequestMapping(value = "/users")
-public class UserResource {
+public class UserController {
 
     @Autowired
     private UserService service;

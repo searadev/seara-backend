@@ -1,4 +1,4 @@
-package com.searadejesus.searabackend.resources;
+package com.searadejesus.searabackend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import com.searadejesus.searabackend.dto.RoleDTO;
 
 @RestController
 @RequestMapping(value = "/roles")
-public class RoleResource {
+public class RoleController {
     
     @Autowired
     private RoleService service;

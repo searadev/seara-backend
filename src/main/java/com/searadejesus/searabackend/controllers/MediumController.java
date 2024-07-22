@@ -1,4 +1,4 @@
-package com.searadejesus.searabackend.resources;
+package com.searadejesus.searabackend.controllers;
 import java.net.URI;
 
 import javax.validation.Valid;
@@ -23,7 +23,7 @@ import com.searadejesus.searabackend.services.MediumService;
 
 @RestController
 @RequestMapping(value = "/mediuns")
-public class MediumResource {
+public class MediumController {
 
     @Autowired
     private MediumService service;

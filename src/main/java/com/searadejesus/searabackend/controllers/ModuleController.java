@@ -1,4 +1,4 @@
-package com.searadejesus.searabackend.resources;
+package com.searadejesus.searabackend.controllers;
 import java.net.URI;
 
 import javax.validation.Valid;
@@ -22,7 +22,7 @@ import com.searadejesus.searabackend.services.ModuleService;
 
 @RestController
 @RequestMapping(value = "/modules")
-public class ModuleResource {
+public class ModuleController {
     
     @Autowired
     private ModuleService service;

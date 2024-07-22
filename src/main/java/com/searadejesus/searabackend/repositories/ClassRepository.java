@@ -16,7 +16,7 @@ public interface ClassRepository extends JpaRepository <Class, Long> {
             + "(LOWER(obj.title) LIKE LOWER(CONCAT('%',:title,'%')) ) AND"
             + "(:module IS NULL OR :module = obj.module )"
             + "GROUP BY obj.id, obj.date " 
-            + "ORDER BY obj.date DESC" )
+            + "ORDER BY obj.date DESC"  )
     Page<Class> findPageable(String title, Module module, Pageable pageable);
     
 }

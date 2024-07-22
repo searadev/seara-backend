@@ -1,4 +1,4 @@
-package com.searadejesus.searabackend.resources;
+package com.searadejesus.searabackend.controllers;
 import java.net.URI;
 
 import javax.validation.Valid;
@@ -18,46 +18,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.searadejesus.searabackend.dto.MessageDTO;
-import com.searadejesus.searabackend.dto.MessageInsertDTO;
-import com.searadejesus.searabackend.services.MessageService;
+import com.searadejesus.searabackend.dto.LectureDTO;
+import com.searadejesus.searabackend.dto.LectureInsertDTO;
+import com.searadejesus.searabackend.services.LectureService;
 
 @RestController
-@RequestMapping(value = "/messages")
-public class MessageResource {
+@RequestMapping(value = "/lectures")
+public class LectureController {
     
     @Autowired
-    private MessageService service;
+    private LectureService service;
 
     @GetMapping
-    public ResponseEntity<Page<MessageDTO>> findAll(
+    public ResponseEntity<Page<LectureDTO>> findAll(
         Pageable pageable,
-        @RequestParam(value = "fullname", defaultValue = "") String fullName,
         @RequestParam(value = "title", defaultValue = "") String title
         ) {
-        Page<MessageDTO> list = service.findAllPaged(pageable, fullName, title);
-        return ResponseEntity.ok().body(list);
-    }
-
-    @GetMapping(value = "/all")
-    public ResponseEntity<Page<MessageDTO>> findAllStatus(
-        Pageable pageable,
-        @RequestParam(value = "fullname", defaultValue = "") String fullName,
-        @RequestParam(value = "title", defaultValue = "") String title
-        ) {
-        Page<MessageDTO> list = service.findAllStatus(pageable, fullName, title);
+        Page<LectureDTO> list = service.findAllPaged(pageable, title.trim());
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<MessageDTO> findById(@PathVariable Long id) {
-        MessageDTO dto = service.findById(id);
+    public ResponseEntity<LectureDTO> findById(@PathVariable Long id) {
+        LectureDTO dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
     }
 
     @PostMapping
-    public ResponseEntity<MessageDTO> insert(@Valid @RequestBody MessageInsertDTO dto) {
-        MessageDTO newDto = service.insert(dto);
+    public ResponseEntity<LectureDTO> insert(@Valid @RequestBody LectureInsertDTO dto) {
+        LectureDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDto.getId()).toUri();
         return ResponseEntity.created(uri).body(newDto);
@@ -65,7 +54,7 @@ public class MessageResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<MessageDTO> update(@Valid @PathVariable Long id, @RequestBody MessageDTO dto){
+    public ResponseEntity<LectureDTO> update(@Valid @PathVariable Long id, @RequestBody LectureDTO dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }

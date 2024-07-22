@@ -1,4 +1,4 @@
-package com.searadejesus.searabackend.resources;
+package com.searadejesus.searabackend.controllers;
 import java.net.URI;
 
 import javax.validation.Valid;
@@ -24,7 +24,7 @@ import com.searadejesus.searabackend.services.ClassService;
 
 @RestController
 @RequestMapping(value = "/classes")
-public class ClassResource {
+public class ClassController {
     
     @Autowired
     private ClassService service;

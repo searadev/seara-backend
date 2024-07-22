@@ -1,4 +1,4 @@
-package com.searadejesus.searabackend.resources;
+package com.searadejesus.searabackend.controllers;
 import java.net.URI;
 
 import javax.validation.Valid;
@@ -25,7 +25,7 @@ import com.searadejesus.searabackend.services.PsychographyService;
 
 @RestController
 @RequestMapping(value = "/psychographies")
-public class PsychographyResource {
+public class PsychographyController {
     
     @Autowired
     private PsychographyService service;

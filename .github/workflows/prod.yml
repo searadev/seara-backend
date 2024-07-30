@@ -33,6 +33,6 @@ jobs:
             - name: Pull image from docker hub
               run: docker pull searadejesus/searadev:latest
             - name: Remove docker container
-              run: docker rm -f searadejesus/searadev
+              run: docker rm -f searadejesus/searadev:latest
             - name: Run docker container
               run: docker run -p 8080:8080 -e APP_PROFILE=${{secrets.APP_PROFILE}} -e CLIENT_ID=${{secrets.CLIENT_ID}} -e CLIENT_SECRET=${{secrets.CLIENT_SECRET}} -e JWT_SECRET=${{secrets.JWT_SECRET}} -e JWT_DURATION=${{secrets.JWT_DURATION}} -e PORT=${{secrets.PORT}} -e DB_URL=${{secrets.DB_URL}} -e DB_USERNAME=${{secrets.DB_USERNAME}} -e DB_PASSWORD=${{secrets.DB_PASSWORD}} searadejesus/searadev:latest

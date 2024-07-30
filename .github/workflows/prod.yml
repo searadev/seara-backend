@@ -31,7 +31,7 @@ jobs:
         runs-on: self-hosted
         steps:
             - name: Pull image from docker hub
-              run: docker pull docker pull searadejesus/searadev:latest
+              run: docker pull searadejesus/searadev:latest
             - name: Remove docker container
               run: docker rm -f searadejesus/searadev
             - name: Run docker container

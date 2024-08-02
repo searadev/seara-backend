@@ -33,20 +33,20 @@ public class MessageController {
     @GetMapping
     public ResponseEntity<Page<MessagePagedDTO>> findAll(
         Pageable pageable,
-        @RequestParam(value = "fullname", defaultValue = "") String fullName,
-        @RequestParam(value = "title", defaultValue = "") String title
+        @RequestParam(value = "fullName", defaultValue = "") String fullName,
+        @RequestParam(value = "text", defaultValue = "") String text
         ) {
-        Page<MessagePagedDTO> list = service.findAllPaged(pageable, fullName, title);
+        Page<MessagePagedDTO> list = service.findAllPaged(pageable, fullName, text);
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/all")
     public ResponseEntity<Page<MessageDTO>> findAllStatus(
         Pageable pageable,
-        @RequestParam(value = "fullname", defaultValue = "") String fullName,
-        @RequestParam(value = "title", defaultValue = "") String title
+        @RequestParam(value = "fullName", defaultValue = "") String fullName,
+        @RequestParam(value = "text", defaultValue = "") String text
         ) {
-        Page<MessageDTO> list = service.findAllStatus(pageable, fullName, title);
+        Page<MessageDTO> list = service.findAllStatus(pageable, fullName, text);
         return ResponseEntity.ok().body(list);
     }
 

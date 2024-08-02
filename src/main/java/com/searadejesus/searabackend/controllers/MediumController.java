@@ -34,6 +34,12 @@ public class MediumController {
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping(value = "/all")
+    public ResponseEntity<Page<MediumDTO>> findAllPageable(Pageable pageable) {
+        Page<MediumDTO> list = service.findAllPageable(pageable);
+        return ResponseEntity.ok().body(list);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<MediumDTO> findById(@PathVariable Long id) {
         MediumDTO dto = service.findById(id);

@@ -27,7 +27,8 @@ public class MediumService {
 
     @Transactional(readOnly = true)
     public Page<MediumDTO> findAllPaged(Pageable pageable) {
-        Page<Medium> list = repository.findAll(pageable);
+        Pageable wholePage = Pageable.unpaged();
+        Page<Medium> list = repository.findAll(wholePage);
         return list.map(x -> new MediumDTO(x));
     }
 

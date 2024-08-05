@@ -61,8 +61,15 @@ public class MessageService {
         return new MessageDTO(entity);
     }
 
+    @Transactional(readOnly = true)
+    public MessageUpdatedDTO findByIdAdmin(Long id) {
+        Optional<Message> obj = repository.findById(id);
+        Message entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        return new MessageUpdatedDTO(entity);
+    }
+
     @Transactional
-    public MessageDTO insert(MessageInsertDTO dto) {
+    public MessageInsertDTO insert(MessageInsertDTO dto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName(); 
@@ -79,11 +86,11 @@ public class MessageService {
         entity.setUser(user);
         
         entity = repository.save(entity);
-        return new MessageDTO(entity);
+        return new MessageInsertDTO(entity);
     }    
 
     @Transactional
-    public MessageDTO update(Long id, MessageUpdatedDTO dto) {
+    public MessageUpdatedDTO update(Long id, MessageUpdatedDTO dto) {
         try {
             Message entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
@@ -94,7 +101,7 @@ public class MessageService {
                 entity.setDate(parsedDate);
 
                 entity = repository.save(entity);
-                return new MessageDTO(entity);
+                return new MessageUpdatedDTO(entity);
         } 
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found" + id);

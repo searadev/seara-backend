@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.searadejesus.searabackend.dto.ClassDTO;
 import com.searadejesus.searabackend.dto.ClassInsertDTO;
+import com.searadejesus.searabackend.dto.ClassUpdatedDTO;
 import com.searadejesus.searabackend.services.ClassService;
 
 @RestController
@@ -55,9 +56,9 @@ public class ClassController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ClassDTO> update(@Valid @PathVariable Long id, @RequestBody ClassDTO dto){
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+    public ResponseEntity<ClassDTO> update(@Valid @PathVariable Long id, @RequestBody ClassUpdatedDTO dto){
+        ClassDTO newDto = service.update(id, dto);
+        return ResponseEntity.ok().body(newDto);
     }
 
     @DeleteMapping(value = "/{id}")

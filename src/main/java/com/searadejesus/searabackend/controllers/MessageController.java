@@ -57,19 +57,25 @@ public class MessageController {
         return ResponseEntity.ok().body(dto);
     }
 
+    @GetMapping(value = "/admin/{id}")
+    public ResponseEntity<MessageUpdatedDTO> findByIdAdmin(@PathVariable Long id) {
+        MessageUpdatedDTO dto = service.findByIdAdmin(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
     @PostMapping
-    public ResponseEntity<MessageDTO> insert(@Valid @RequestBody MessageInsertDTO dto) {
-        MessageDTO newDto = service.insert(dto);
+    public ResponseEntity<MessageInsertDTO> insert(@Valid @RequestBody MessageInsertDTO dto) {
+        dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newDto.getId()).toUri();
-        return ResponseEntity.created(uri).body(newDto);
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
 
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<MessageDTO> update(@Valid @PathVariable Long id, @RequestBody MessageUpdatedDTO dto){
-        MessageDTO newDto = service.update(id, dto);
-        return ResponseEntity.ok().body(newDto);
+    public ResponseEntity<MessageUpdatedDTO> update(@Valid @PathVariable Long id, @RequestBody MessageUpdatedDTO dto){
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")

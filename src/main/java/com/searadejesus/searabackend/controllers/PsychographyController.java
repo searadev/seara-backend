@@ -57,19 +57,25 @@ public class PsychographyController {
         return ResponseEntity.ok().body(dto);
     }
 
+    @GetMapping(value = "/admin/{id}")
+    public ResponseEntity<PsychographyUpdatedDTO> findByIdAdmin(@PathVariable Long id) {
+        PsychographyUpdatedDTO dto = service.findByIdAdmin(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
     @PostMapping
-    public ResponseEntity<PsychographyDTO> insert(@Valid @RequestBody PsychographyInsertDTO dto) {
-        PsychographyDTO newDto = service.insert(dto);
+    public ResponseEntity<PsychographyInsertDTO> insert(@Valid @RequestBody PsychographyInsertDTO dto) {
+        dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newDto.getId()).toUri();
-        return ResponseEntity.created(uri).body(newDto);
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
 
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<PsychographyDTO> update(@Valid @PathVariable Long id, @RequestBody PsychographyUpdatedDTO dto){
-        PsychographyDTO newDto = service.update(id, dto);
-        return ResponseEntity.ok().body(newDto);
+    public ResponseEntity<PsychographyUpdatedDTO> update(@Valid @PathVariable Long id, @RequestBody PsychographyUpdatedDTO dto){
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")

@@ -1,5 +1,7 @@
 package com.searadejesus.searabackend.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.searadejesus.searabackend.dto.ClassDTO;
 import com.searadejesus.searabackend.dto.ClassInsertDTO;
+import com.searadejesus.searabackend.dto.ClassUpdatedDTO;
 import com.searadejesus.searabackend.entities.Class;
 import com.searadejesus.searabackend.entities.User;
 import com.searadejesus.searabackend.repositories.ClassRepository;
@@ -64,18 +67,31 @@ public class ClassService {
         String login = authentication.getName(); 
         User user = userRepository.findByEmail(login);
 
-        Class entity = new Class();
+        Class entity = new Class();      
+
         copyDtoToEntity(dto, entity);
+
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        String text = entity.getDate().format(formatters);
+        LocalDate parsedDate = LocalDate.parse(text, formatters);
+        entity.setDate(parsedDate);
+
         entity.setUser(user);
         entity = repository.save(entity);
         return new ClassDTO(entity);
     }    
 
     @Transactional
-    public ClassDTO update(Long id, ClassDTO dto) {
+    public ClassDTO update(Long id, ClassUpdatedDTO dto) {
         try {
             Class entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
+
+                DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+                String text = entity.getDate().format(formatters);
+                LocalDate parsedDate = LocalDate.parse(text, formatters);
+                entity.setDate(parsedDate);
+
                 entity = repository.save(entity);
                 return new ClassDTO(entity);
         } 

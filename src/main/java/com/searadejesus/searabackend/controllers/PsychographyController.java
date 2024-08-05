@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.searadejesus.searabackend.dto.PsychographyDTO;
 import com.searadejesus.searabackend.dto.PsychographyInsertDTO;
 import com.searadejesus.searabackend.dto.PsychographyPagedDTO;
+import com.searadejesus.searabackend.dto.PsychographyUpdatedDTO;
 import com.searadejesus.searabackend.services.PsychographyService;
 
 @RestController
@@ -66,9 +67,9 @@ public class PsychographyController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<PsychographyDTO> update(@Valid @PathVariable Long id, @RequestBody PsychographyDTO dto){
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+    public ResponseEntity<PsychographyDTO> update(@Valid @PathVariable Long id, @RequestBody PsychographyUpdatedDTO dto){
+        PsychographyDTO newDto = service.update(id, dto);
+        return ResponseEntity.ok().body(newDto);
     }
 
     @DeleteMapping(value = "/{id}")

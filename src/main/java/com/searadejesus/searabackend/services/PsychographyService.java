@@ -1,5 +1,7 @@
 package com.searadejesus.searabackend.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -20,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.searadejesus.searabackend.dto.PsychographyDTO;
 import com.searadejesus.searabackend.dto.PsychographyInsertDTO;
 import com.searadejesus.searabackend.dto.PsychographyPagedDTO;
+import com.searadejesus.searabackend.dto.PsychographyUpdatedDTO;
 import com.searadejesus.searabackend.entities.Medium;
 import com.searadejesus.searabackend.entities.Psychography;
 import com.searadejesus.searabackend.entities.User;
@@ -71,16 +74,28 @@ public class PsychographyService {
 
         Psychography entity = new Psychography();
         copyDtoToEntity(dto, entity);
+
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        String text = entity.getDate().format(formatters);
+        LocalDate parsedDate = LocalDate.parse(text, formatters);
+        entity.setDate(parsedDate);
+
         entity.setUser(user);
         entity = repository.save(entity);
         return new PsychographyDTO(entity);
     }    
 
     @Transactional
-    public PsychographyDTO update(Long id, PsychographyDTO dto) {
+    public PsychographyDTO update(Long id, PsychographyUpdatedDTO dto) {
         try {
             Psychography entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
+
+                DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+                String text = entity.getDate().format(formatters);
+                LocalDate parsedDate = LocalDate.parse(text, formatters);
+                entity.setDate(parsedDate);
+
                 entity = repository.save(entity);
                 return new PsychographyDTO(entity);
         } 

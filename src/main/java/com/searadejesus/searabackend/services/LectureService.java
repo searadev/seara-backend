@@ -1,5 +1,7 @@
 package com.searadejesus.searabackend.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.searadejesus.searabackend.dto.LectureDTO;
 import com.searadejesus.searabackend.dto.LectureInsertDTO;
+import com.searadejesus.searabackend.dto.LectureUpdatedDTO;
 import com.searadejesus.searabackend.entities.Lecture;
 import com.searadejesus.searabackend.entities.User;
 import com.searadejesus.searabackend.repositories.LectureRepository;
@@ -60,16 +63,28 @@ public class LectureService {
 
         Lecture entity = new Lecture();
         copyDtoToEntity(dto, entity);
+
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        String text = entity.getDate().format(formatters);
+        LocalDate parsedDate = LocalDate.parse(text, formatters);
+        entity.setDate(parsedDate);
+
         entity.setUser(user);
         entity = repository.save(entity);
         return new LectureDTO(entity);
     }    
 
     @Transactional
-    public LectureDTO update(Long id, LectureDTO dto) {
+    public LectureDTO update(Long id, LectureUpdatedDTO dto) {
         try {
             Lecture entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
+
+                DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+                String text = entity.getDate().format(formatters);
+                LocalDate parsedDate = LocalDate.parse(text, formatters);
+                entity.setDate(parsedDate);
+
                 entity = repository.save(entity);
                 return new LectureDTO(entity);
         } 

@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.searadejesus.searabackend.dto.MessageDTO;
 import com.searadejesus.searabackend.dto.MessageInsertDTO;
 import com.searadejesus.searabackend.dto.MessagePagedDTO;
+import com.searadejesus.searabackend.dto.MessageUpdatedDTO;
 import com.searadejesus.searabackend.services.MessageService;
 
 @RestController
@@ -66,9 +67,9 @@ public class MessageController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<MessageDTO> update(@Valid @PathVariable Long id, @RequestBody MessageDTO dto){
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+    public ResponseEntity<MessageDTO> update(@Valid @PathVariable Long id, @RequestBody MessageUpdatedDTO dto){
+        MessageDTO newDto = service.update(id, dto);
+        return ResponseEntity.ok().body(newDto);
     }
 
     @DeleteMapping(value = "/{id}")

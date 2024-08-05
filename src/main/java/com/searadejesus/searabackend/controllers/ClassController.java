@@ -40,6 +40,12 @@ public class ClassController {
         return ResponseEntity.ok().body(list);
     }
 
+    @GetMapping(value = "/admin/{id}")
+    public ResponseEntity<ClassUpdatedDTO> findByIdAdmin(@PathVariable Long id) {
+        ClassUpdatedDTO dto = service.findByIdAdmin(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<ClassDTO> findById(@PathVariable Long id) {
         ClassDTO dto = service.findById(id);
@@ -47,18 +53,18 @@ public class ClassController {
     }
 
     @PostMapping
-    public ResponseEntity<ClassDTO> insert(@Valid @RequestBody ClassInsertDTO dto) {
-        ClassDTO newDto = service.insert(dto);
+    public ResponseEntity<ClassInsertDTO> insert(@Valid @RequestBody ClassInsertDTO dto) {
+        dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newDto.getId()).toUri();
-        return ResponseEntity.created(uri).body(newDto);
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
 
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ClassDTO> update(@Valid @PathVariable Long id, @RequestBody ClassUpdatedDTO dto){
-        ClassDTO newDto = service.update(id, dto);
-        return ResponseEntity.ok().body(newDto);
+    public ResponseEntity<ClassUpdatedDTO> update(@Valid @PathVariable Long id, @RequestBody ClassUpdatedDTO dto){
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")

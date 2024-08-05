@@ -65,8 +65,15 @@ public class PsychographyService {
         return new PsychographyDTO(entity);
     }
 
+    @Transactional(readOnly = true)
+    public PsychographyUpdatedDTO findByIdAdmin(Long id) {
+        Optional<Psychography> obj = repository.findById(id);
+        Psychography entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        return new PsychographyUpdatedDTO(entity);
+    }
+
     @Transactional
-    public PsychographyDTO insert(PsychographyInsertDTO dto) {        
+    public PsychographyInsertDTO insert(PsychographyInsertDTO dto) {        
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName(); 
@@ -82,11 +89,11 @@ public class PsychographyService {
 
         entity.setUser(user);
         entity = repository.save(entity);
-        return new PsychographyDTO(entity);
+        return new PsychographyInsertDTO(entity);
     }    
 
     @Transactional
-    public PsychographyDTO update(Long id, PsychographyUpdatedDTO dto) {
+    public PsychographyUpdatedDTO update(Long id, PsychographyUpdatedDTO dto) {
         try {
             Psychography entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
@@ -97,7 +104,7 @@ public class PsychographyService {
                 entity.setDate(parsedDate);
 
                 entity = repository.save(entity);
-                return new PsychographyDTO(entity);
+                return new PsychographyUpdatedDTO(entity);
         } 
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found" + id);

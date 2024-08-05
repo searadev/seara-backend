@@ -60,8 +60,15 @@ public class ClassService {
         return new ClassDTO(entity);
     }
 
+    @Transactional(readOnly = true)
+    public ClassUpdatedDTO findByIdAdmin(Long id) {
+        Optional<Class> obj = repository.findById(id);
+        Class entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        return new ClassUpdatedDTO(entity);
+    }
+
     @Transactional
-    public ClassDTO insert(ClassInsertDTO dto) {
+    public ClassInsertDTO insert(ClassInsertDTO dto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName(); 
@@ -78,11 +85,11 @@ public class ClassService {
 
         entity.setUser(user);
         entity = repository.save(entity);
-        return new ClassDTO(entity);
+        return new ClassInsertDTO(entity);
     }    
 
     @Transactional
-    public ClassDTO update(Long id, ClassUpdatedDTO dto) {
+    public ClassUpdatedDTO update(Long id, ClassUpdatedDTO dto) {
         try {
             Class entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
@@ -93,7 +100,7 @@ public class ClassService {
                 entity.setDate(parsedDate);
 
                 entity = repository.save(entity);
-                return new ClassDTO(entity);
+                return new ClassUpdatedDTO(entity);
         } 
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found" + id);

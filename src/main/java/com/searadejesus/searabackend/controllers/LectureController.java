@@ -37,7 +37,7 @@ public class LectureController {
         ) {
         Page<LectureDTO> list = service.findAllPaged(pageable, title.trim());
         return ResponseEntity.ok().body(list);
-    }
+    }    
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<LectureDTO> findById(@PathVariable Long id) {
@@ -45,19 +45,25 @@ public class LectureController {
         return ResponseEntity.ok().body(dto);
     }
 
+    @GetMapping(value = "/admin/{id}")
+    public ResponseEntity<LectureUpdatedDTO> findByIdAdmin(@PathVariable Long id) {
+        LectureUpdatedDTO dto = service.findByIdAdmin(id);
+        return ResponseEntity.ok().body(dto);
+    }
+
     @PostMapping
-    public ResponseEntity<LectureDTO> insert(@Valid @RequestBody LectureInsertDTO dto) {
-        LectureDTO newDto = service.insert(dto);
+    public ResponseEntity<LectureInsertDTO> insert(@Valid @RequestBody LectureInsertDTO dto) {
+        dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newDto.getId()).toUri();
-        return ResponseEntity.created(uri).body(newDto);
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
 
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<LectureDTO> update(@Valid @PathVariable Long id, @RequestBody LectureUpdatedDTO dto){
-        LectureDTO newDto = service.update(id, dto);
-        return ResponseEntity.ok().body(newDto);
+    public ResponseEntity<LectureUpdatedDTO> update(@Valid @PathVariable Long id, @RequestBody LectureUpdatedDTO dto){
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")

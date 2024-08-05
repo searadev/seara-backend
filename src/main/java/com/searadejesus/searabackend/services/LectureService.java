@@ -54,8 +54,15 @@ public class LectureService {
         return new LectureDTO(entity);
     }
 
+    @Transactional(readOnly = true)
+    public LectureUpdatedDTO findByIdAdmin(Long id) {
+        Optional<Lecture> obj = repository.findById(id);
+        Lecture entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+        return new LectureUpdatedDTO(entity);
+    }
+
     @Transactional
-    public LectureDTO insert(LectureInsertDTO dto) {
+    public LectureInsertDTO insert(LectureInsertDTO dto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName(); 
@@ -71,11 +78,11 @@ public class LectureService {
 
         entity.setUser(user);
         entity = repository.save(entity);
-        return new LectureDTO(entity);
+        return new LectureInsertDTO(entity);
     }    
 
     @Transactional
-    public LectureDTO update(Long id, LectureUpdatedDTO dto) {
+    public LectureUpdatedDTO update(Long id, LectureUpdatedDTO dto) {
         try {
             Lecture entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
@@ -86,7 +93,7 @@ public class LectureService {
                 entity.setDate(parsedDate);
 
                 entity = repository.save(entity);
-                return new LectureDTO(entity);
+                return new LectureUpdatedDTO(entity);
         } 
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found" + id);

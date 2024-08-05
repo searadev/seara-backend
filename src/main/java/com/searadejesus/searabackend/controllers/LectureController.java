@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.searadejesus.searabackend.dto.LectureDTO;
 import com.searadejesus.searabackend.dto.LectureInsertDTO;
+import com.searadejesus.searabackend.dto.LectureUpdatedDTO;
 import com.searadejesus.searabackend.services.LectureService;
 
 @RestController
@@ -54,9 +55,9 @@ public class LectureController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<LectureDTO> update(@Valid @PathVariable Long id, @RequestBody LectureDTO dto){
-        dto = service.update(id, dto);
-        return ResponseEntity.ok().body(dto);
+    public ResponseEntity<LectureDTO> update(@Valid @PathVariable Long id, @RequestBody LectureUpdatedDTO dto){
+        LectureDTO newDto = service.update(id, dto);
+        return ResponseEntity.ok().body(newDto);
     }
 
     @DeleteMapping(value = "/{id}")

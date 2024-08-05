@@ -1,5 +1,7 @@
 package com.searadejesus.searabackend.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.searadejesus.searabackend.dto.MessageDTO;
 import com.searadejesus.searabackend.dto.MessageInsertDTO;
 import com.searadejesus.searabackend.dto.MessagePagedDTO;
+import com.searadejesus.searabackend.dto.MessageUpdatedDTO;
 import com.searadejesus.searabackend.entities.Medium;
 import com.searadejesus.searabackend.entities.Message;
 import com.searadejesus.searabackend.entities.User;
@@ -67,16 +70,29 @@ public class MessageService {
 
         Message entity = new Message();
         copyDtoToEntity(dto, entity);
+
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        String text = entity.getDate().format(formatters);
+        LocalDate parsedDate = LocalDate.parse(text, formatters);
+        entity.setDate(parsedDate);
+
         entity.setUser(user);
+        
         entity = repository.save(entity);
         return new MessageDTO(entity);
     }    
 
     @Transactional
-    public MessageDTO update(Long id, MessageDTO dto) {
+    public MessageDTO update(Long id, MessageUpdatedDTO dto) {
         try {
             Message entity = repository.getOne(id);
                 copyDtoToEntity(dto, entity);
+
+                DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+                String text = entity.getDate().format(formatters);
+                LocalDate parsedDate = LocalDate.parse(text, formatters);
+                entity.setDate(parsedDate);
+
                 entity = repository.save(entity);
                 return new MessageDTO(entity);
         } 
